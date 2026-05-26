@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agence KNA — L'immobilier de prestige à Marrakech</title>
+<meta name="description" content="Villas, riads & appartements d'exception à Marrakech. Sélection éditoriale, conciergerie privée, réponse sous 2h." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['"Playfair Display"', 'serif'],
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { min-height: 100vh; overflow-x: hidden; }
+  ::selection { background: rgba(212,165,90,0.4); color: white; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; height: auto; }
+
+  .font-display { font-family: 'Playfair Display', 'Times New Roman', serif; }
+
+  @keyframes shinyGradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  .shiny-text {
+    background: linear-gradient(90deg, #d4a55a 0%, #ffffff 50%, #d4a55a 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: shinyGradient 3.5s linear infinite;
+  }
+  .gold-gradient-text {
+    background: linear-gradient(90deg, #f5e6c4 0%, #d4a55a 50%, #f5e6c4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .neon-btn { position: relative; overflow: hidden; }
+  .neon-btn::before, .neon-btn::after {
+    content: ""; position: absolute; left: 0; right: 0; height: 1px;
+    width: 75%; margin: 0 auto;
+    background: linear-gradient(90deg, transparent, #d4a55a, transparent);
+    transition: opacity 0.5s;
+  }
+  .neon-btn::before { top: 0; opacity: 0; }
+  .neon-btn::after { bottom: -1px; opacity: 1; }
+  .neon-btn:hover::before { opacity: 1; }
+  .neon-btn:hover::after { opacity: 0.4; }
+
+  .villa-card { transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), border-color 0.5s, box-shadow 0.5s; will-change: transform; }
+  .villa-card:hover { border-color: rgba(212,165,90,0.4); box-shadow: 0 45px 70px -15px rgba(0,0,0,0.8), 0 0 60px -20px rgba(212,165,90,0.35); }
+
+  @keyframes scrollCue {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+  .scroll-cue-line { animation: scrollCue 2s ease-in-out infinite; }
+
+  @keyframes softPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.95); }
+  }
+  .pulse-soft { animation: softPulse 2.4s ease-in-out infinite; }
+
+  @keyframes slowPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  .pulse-slow { animation: slowPulse 6s ease-in-out infinite; }
+  .pulse-slow-2 { animation: slowPulse 7.5s ease-in-out infinite 1.2s; }
+
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-track { animation: marqueeScroll 60s linear infinite; }
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .title-char { display: inline-block; }
+
+  #initial-loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #000;
+    display: grid; place-items: center;
+    transition: opacity 0.8s, visibility 0.8s;
+  }
+  #initial-loader.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+  .loader-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    letter-spacing: 0.22em;
+    color: #fff;
+  }
+  .loader-logo em { color: #d4a55a; font-style: italic; }
+  .loader-bar {
+    margin-top: 24px;
+    width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, #d4a55a, transparent);
+    animation: loaderShine 1.4s ease-in-out infinite;
+  }
+  @keyframes loaderShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .article-firstletter::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    line-height: 0.9;
+    color: #d4a55a;
+    float: left;
+    padding: 8px 12px 0 0;
+    font-weight: 400;
+  }
+</style>
+</head>
+<body class="bg-black text-white">
+
+<div id="initial-loader">
+  <div style="text-align:center;">
+    <div class="loader-logo">KNA · <em>IMMOBILIER</em></div>
+    <div class="loader-bar"></div>
+  </div>
+</div>
+
+<div id="root"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1",
+    "framer-motion": "https://esm.sh/framer-motion@11.18.2?deps=react@18.3.1,react-dom@18.3.1",
+    "@paper-design/shaders-react": "https://esm.sh/@paper-design/shaders-react@0.0.76?deps=react@18.3.1,react-dom@18.3.1",
+    "lucide-react": "https://esm.sh/lucide-react@0.469.0?deps=react@18.3.1",
+    "htm": "https://esm.sh/htm@3.1.1",
+    "three": "https://esm.sh/three@0.160.0",
+    "gsap": "https://esm.sh/gsap@3.12.5",
+    "lenis": "https://esm.sh/lenis@1.1.13"
+  }
+}
+</script>
+
+<script id="kna-data" type="application/json">[{"slug":"achat-appartement-marrakech-agdal-apmaag02","title":"Bel appartement situé dans une résidence sécurisée","type":"appartement","tx":"achat","loc":"Agdal","price":320000,"priceText":"320 000€","ch":2,"sdb":2,"hab":110,"ter":178,"desc":"Bel appartement situé dans une résidence sécurisée au quartier de l’Agdal à 7 minutes du centre-ville de Marrakech Superficie totale : 178 m2 dont 68 m2 de terrasses Il se compose de :1 Grand salon avec cheminée, télévision donnant sur une terrasse aménagée par une grande baie vitrée1 Salle à manger1 Cuisine entièrement équipée2 Chambres avec salle de bain, climatisation réversible1 Belle terrasse aménagée1 Toilette…","feat":["Piscine","Terrasse","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAAG02"},{"slug":"achat-appartement-marrakech-agdal-apmaag03","title":"Bel appartement situé dans une résidence sécurisée","type":"appartement","tx":"achat","loc":"Agdal","price":325000,"priceText":"325 000€","ch":2,"sdb":2,"hab":null,"ter":140,"desc":"Bel appartement situé dans une résidence sécurisée au quartier de l’Agdal à 7 minutes du centre-ville de Marrakech Superficie totale : 140 m2Il se compose de :1 Joli Hall1 Salon marocain 1 Salon européen avec télévision1 Salle à manger avec un petit coin salon entourés de grandes fenêtres1 Cuisine entièrement équipé2 Chambres avec salle de bain, terrasse, climatisation réversible1 Toilette invités Divers:Beau jardin…","feat":["Piscine","Jardin paysager","Terrasse","Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAAG03"},{"slug":"achat-appartement-marrakech-boulevard-mohamed-vi-apbmvi01","title":"Bel appartement situé au 2ème étage d’une résidence sécurisée","type":"appartement","tx":"achat","loc":"Boulevard Mohamed Vi","price":265000,"priceText":"265 000€","ch":3,"sdb":2,"hab":95,"ter":null,"desc":"Bel appartement situé au 2ème étage d’une résidence sécurisée sur le boulevard Mohamed VI Superficie: 95 m2Il se compose de :1 Agréable salon avec télévision à écran plat donnant sur une terrasse1 Coin salle à manger pour 6 personnes1 Cuisine entièrement équipée3 Chambres avec climatisation réversible dont 1 avec salle de bain1 Salle de bain séparée1 Toilette invités Divers:Terrasse aménagée Un joli jardin dans la…","feat":["Piscine","Jardin paysager","Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APBMVI01"},{"slug":"achat-appartement-marrakech-gueliz-amag108","title":"Très beau duplex situé dans une résidence prestigieuse sécurisée","type":"appartement","tx":"achat","loc":"Gueliz","price":330000,"priceText":"330 000€","ch":2,"sdb":2,"hab":137,"ter":null,"desc":"Très beau duplex situé au rez-de-chaussée d'une résidence prestigieuse sécurisée en plein cœur de Guéliz.Superficie : 137 m2 avec jardin et terrasse Il se compose de :2 Salons élégants lumineux1 Belle cuisine moderne américaine2 Chambres spacieuses dont 1 suite parentale avec salle de bain attenante, climatisation réversible1 Seconde salle de bain avec douche et toilettes séparés1 Magnifique jardin/terrasse privé…","feat":["Piscine","Jardin paysager","Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAG108"},{"slug":"achat-appartement-marrakech-gueliz-amag110","title":"Très bel appartement situé au 1er étage d’une résidence prestigieuse sécurisée","type":"appartement","tx":"achat","loc":"Gueliz","price":240000,"priceText":"240 000€","ch":2,"sdb":1,"hab":85,"ter":null,"desc":"Très bel appartement situé au 1er étage d’une résidence prestigieuse sécurisée en plein cœur de Guéliz.Superficie : 85 m2 Il se compose de :1 Salon spacieux et lumineux1 Belle cuisine américaine moderne et équipée1 Suite parentale avec un vaste espace de rangement, climatisation réversible1 Chambre spacieuse, climatisation réversible Divers:1 Piscine intérieure dans la résidence1 Piscine en rooftop avec des…","feat":["Piscine","Hammam","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAG110"},{"slug":"achat-appartement-marrakech-gueliz-amag112","title":"Superbe appartement entièrement rénové dans un style Chabi Chic, situé au 5ème étage d’une résidence de standing","type":"appartement","tx":"achat","loc":"Gueliz","price":250000,"priceText":"250 000€","ch":2,"sdb":2,"hab":null,"ter":95,"desc":"Superbe appartement entièrement rénové dans un style Chabi Chic, situé au 5ème étage d’une résidence de standing en plein cœur de Guéliz offrant un cadre raffiné et chaleureux.Superficie: 95 m2Il se compose de :1 Grand double salon lumineux avec télévision donnant sur une grande terrasse via des portes vitrées1 Coin salle à manger pour 4 personnes1 Cuisine américaine entièrement équipée avec des fenêtres donnant sur…","feat":["Terrasse"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAG112"},{"slug":"achat-appartement-marrakech-gueliz-amag114","title":"Superbe appartement situé au 4ème étage d’une résidence de standing","type":"appartement","tx":"achat","loc":"Gueliz","price":325000,"priceText":"325 000€","ch":3,"sdb":3,"hab":133,"ter":null,"desc":"Superbe appartement situé au 4ème étage d’une résidence de standing en plein cœur de Guéliz offrant un cadre raffiné et chaleureux.Superficie: 133 m2Il se compose de :1 Grand salon lumineux avec télévision donnant sur une grande terrasse via des portes vitrées1 Salle à manger pour 5 personnes1 Cuisine américaine entièrement équipée 3 Chambres agréables et lumineuses avec placard, climatisation réversible (dont une…","feat":["Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAG114"},{"slug":"achat-appartement-marrakech-gueliz-amag115","title":"Bel appartement situé au 4ème étage d’une résidence de standing","type":"appartement","tx":"achat","loc":"Gueliz","price":315000,"priceText":"315 000€","ch":2,"sdb":2,"hab":null,"ter":123,"desc":"Réf AMAG115 Bel appartement situé au 4ème étage d’une résidence de standing en plein cœur de Guéliz offrant un cadre raffiné et chaleureux.Superficie: 129 m2Il se compose de :1 Hall1 Salon avec télévision donnant sur une terrasse couverte1 Coin salle à manger pour 5 personnes1 Cuisine entièrement équipée semi-ouverte 2 Chambres agréables avec salle de bain, placard, climatisation réversible Toilettes invités…","feat":["Terrasse","Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAG115"},{"slug":"achat-appartement-marrakech-gueliz-amag60","title":"Unique Appartement de très haut standing","type":"appartement","tx":"achat","loc":"Gueliz","price":1350000,"priceText":"1 350 000€","ch":3,"sdb":3,"hab":232,"ter":590,"desc":"Penthouse de très Haut Standing complètement insonorisé, vendu meublé et entièrement domotisé. Il dispose de matériaux et mobilier provenant d'Italie (pâtes de verre, parquet en bois exotique …) et d’une finition soignée.Superficie habitable : 232 m2Très grande terrasse titrée : 228 m2Terrasse en usufruit : 130 m2Il se compose de :2 Grandes Chambres avec salles de bain et double vitrage Skydome électrique dans les…","feat":["Terrasse"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAG60"},{"slug":"achat-appartement-marrakech-gueliz-amavh15","title":"Très bel appartement situé au 2ème étage d’une résidence sécurisée de haut standing","type":"appartement","tx":"achat","loc":"Gueliz","price":360000,"priceText":"360 000€","ch":3,"sdb":2,"hab":120,"ter":null,"desc":"Très bel appartement situé au 2ème étage d’une résidence sécurisée de haut standing en plein cœur du Guéliz, à quelques pas du lycée français Victor Hugo.Superficie : 120 m2Il se compose de :1 Salon avec terrasse1 Cuisine américaine moderne équipée (Bosch)& plan de travail en HPL, lave linge et lave vaisselle3 Chambres avec climatisation réversible, terrasse2 Salles de bain Toilettes en bloc WC Geberit& douche…","feat":["Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAVH15"},{"slug":"achat-appartement-marrakech-gueliz-amavh16","title":"Très bel appartement situé au 2ème étage d’une résidence sécurisée de haut standing","type":"appartement","tx":"achat","loc":"Gueliz","price":348000,"priceText":"348 000€","ch":3,"sdb":2,"hab":116,"ter":null,"desc":"Très bel appartement situé au 2ème étage d’une résidence sécurisée de haut standing en plein cœur du Guéliz, à quelques pas du lycée français Victor Hugo.Superficie : 116 m2Il se compose de :1 Salon avec terrasse1 Cuisine américaine moderne équipée (Bosch)& plan de travail en HPL, lave linge et lave vaisselle3 Chambres avec climatisation réversible, terrasse2 Salles de bain Toilettes en bloc WC Geberit & douche…","feat":["Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAVH16"},{"slug":"achat-appartement-marrakech-hivernage-apmah104","title":"Très bel Appartement au sein d’une belle résidence avec ascenseur en plein Hivernage","type":"appartement","tx":"achat","loc":"Hivernage","price":null,"priceText":"Sur demande","ch":3,"sdb":2,"hab":195,"ter":null,"desc":"Très bel Appartement au 1er étage surélevé au sein d’une belle résidence avec ascenseur en plein Hivernage Superficie habitable:195m2Il se compose de :Entrée2 Salons européens1 Salon marocain moderne1 Salle à manger1 Cuisine équipée Toilette invités1 Suite parentale avec salle de bain2 Chambres et 1 salle de bain Vaste terrasse vue jardin Cellier Climatisation réversible Parking privé au sous-sol Prix de vente :…","feat":["Jardin paysager","Terrasse","Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAH104"},{"slug":"achat-appartement-marrakech-hivernage-apmah190","title":"Appartement de grand standing situé au 3ème étage d&#039;une petite résidence calme et sécurisée","type":"appartement","tx":"achat","loc":"Hivernage","price":null,"priceText":"Sur demande","ch":3,"sdb":3,"hab":300,"ter":null,"desc":"Appartement de grand standing situé au 3ème étage d'une petite résidence calme et sécurisée au sein du quartier de l’Hivernage Superficie habitable : 320 m2 dont 100 m2 de terrasse Il se compose de :3 Chambres donnant chacune sur la terrasse dont une avec cheminée3 Salles de bain Grand salon ouvert sur la terrasse Salle à manger ouverte sur la terrasse Cuisine ouverte entièrement équipée Divers :Fibre optique…","feat":["Terrasse","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAH190"},{"slug":"achat-appartement-marrakech-hivernage-apmah193","title":"Très beau et lumineux appartement au 4ème étage d&#039;une belle résidence","type":"appartement","tx":"achat","loc":"Hivernage","price":null,"priceText":"Sur demande","ch":2,"sdb":2,"hab":155,"ter":null,"desc":"Très beau et lumineux appartement au 4ème étage d'une belle résidence en plein cœur de l'hivernage Superficie totale : 155 m2 Superficie habitable : 110 m2 Superficie terrasse : 45 m2Il se compose de :1 Vaste salon / salle à manger avec cheminée et TV donnant sur une terrasse couverte1 Belle cuisine entièrement équipée1 Toilette invités2 Vastes chambres très lumineuse chacune avec salle de bain, Tv, climatisation…","feat":["Terrasse","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAH193"},{"slug":"achat-appartement-marrakech-hivernage-apmah205","title":"Très beau et lumineux appartement dans une belle résidence en plein cœur de l&#039;hivernage","type":"appartement","tx":"achat","loc":"Hivernage","price":410000,"priceText":"410 000€","ch":2,"sdb":2,"hab":117,"ter":null,"desc":"Très beau et lumineux appartement dans une belle résidence en plein cœur de l'hivernage Superficie habitable : 117 m2 Il se compose de :1 Grand séjour avec télévision, de grandes baies vitrées donnant sur une terrasse1 Cuisine américaine entièrement équipée1 Chambre avec salle de bain, climatisation réversible1 Suite avec salle de bain, climatisation réversible1 Toilette invités1 Grande terrasse Divers:1 Place de…","feat":["Terrasse","Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAH205"},{"slug":"achat-appartement-marrakech-hivernage-apmah209","title":"Très beau et lumineux appartement situé au 3ème étage d’une belle résidence","type":"appartement","tx":"achat","loc":"Hivernage","price":580000,"priceText":"580 000€","ch":3,"sdb":2,"hab":220,"ter":null,"desc":"Très beau et lumineux appartement situé au 3ème étage d’une belle résidence au cœur de l'hivernage Superficie habitable : 220 m2Il se compose de :1 Double salon avec de grandes fenêtres1 Salle à manger2 Chambres avec salle de bain commune, climatisation réversible1 suite parentale avec salle de bain, climatisation réversible1 Grande cuisine entièrement équipée1 Toilette invités Divers:1 Place de Parking titrée…","feat":["Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAH209"},{"slug":"achat-appartement-marrakech-hivernage-apmah210","title":"Bel appartement situé au 2ème étage d’une résidence au cœur de l&#039;hivernage","type":"appartement","tx":"achat","loc":"Hivernage","price":340000,"priceText":"340 000€","ch":2,"sdb":2,"hab":125,"ter":null,"desc":"Bel appartement situé au 2ème étage d’une résidence au cœur de l'hivernage à seulement 50 mètres de la célèbre M Avenue Superficie habitable : 125 m2Il se compose de :1 Salon lumineux avec télévision, coin salle à manger et terrasse1 Chambre parentale avec salle de bain, climatisation réversible1 Chambre avec climatisation réversible1 Salle de bain séparée1 Cuisine équipée avec terrasse1 Toilette invités…","feat":["Piscine","Jardin paysager","Terrasse","Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAH210"},{"slug":"achat-appartement-marrakech-hivernage-apmah212","title":"Bel appartement moderne situé au 1er étage d’une résidence sécurisée","type":"appartement","tx":"achat","loc":"Hivernage","price":280000,"priceText":"280 000€","ch":2,"sdb":2,"hab":null,"ter":110,"desc":"Bel appartement moderne situé au 1er étage d’une résidence sécurisée à l’Hivernage Superficie habitable : 110 m2Il se compose de :1 Grand séjour avec grande télévision1 Coin salle à manger pour 6 personnes1 Cuisine entièrement équipée 1 Chambre avec placards, climatisation réversible1 Salle de bain séparée1 Grande suite avec salle de bain, télévision, placards, climatisation réversible Divers :Parking couvert Atouts…","feat":["Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAH212"},{"slug":"achat-appartement-marrakech-hivernage-apmah213","title":"Magnifique appartement situé dans une résidence sécurisée sur une des avenues les plus prisées de Marrakech","type":"appartement","tx":"achat","loc":"Hivernage","price":1000000,"priceText":"1 000 000€","ch":2,"sdb":2,"hab":165,"ter":null,"desc":"Magnifique appartement situé dans une résidence sécurisée sur une des avenues les plus prisées de Marrakech au quartier de l’Hivernage.Superficie: 150 m2 dont 15 m2 de terrasse Il se compose de :1 Agréable salon avec télévision donnant sur une terrasse couverte par une grande baie vitrée1 Salle à manger pour 6 personnes1 Cuisine entièrement équipée 2 Chambres avec salle de bain, climatisation réversible1 Toilette…","feat":["Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAH213"},{"slug":"achat-appartement-marrakech-hivernage-apmah214","title":"Très beau et lumineux appartement situé au dernier étage","type":"appartement","tx":"achat","loc":"Hivernage","price":890000,"priceText":"890 000€","ch":3,"sdb":2,"hab":250,"ter":null,"desc":"Très beau et lumineux appartement situé au dernier étage d’une belle résidence de l'hivernage Superficie habitable : 250 m2Il se compose de :1 Grand séjour et salon avec de grandes baies vitrées donnant sur une terrasse1 Salle à manger1 Suite parentale avec salle de bain, dressing, climatisation réversible et accès à deux terrasses2 Chambres avec une salle de bain commune, climatisation réversible et dont l’une avec…","feat":["Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAH214"},{"slug":"achat-appartement-marrakech-majorelle-apmaj68","title":"Magnifique Duplex d&#039;exception situé au 4ème et 5ème étage d&#039;une Résidence de prestige","type":"appartement","tx":"achat","loc":"Majorelle","price":1820000,"priceText":"1 820 000€","ch":3,"sdb":3,"hab":400,"ter":400,"desc":"Magnifique Duplex d’exception situé au 4ème et 5ème étage d’une Résidence de prestige récente, exposé plein Sud avec une vue magique sur le Jardin Majorelle, le musée Yves Saint Laurent et les montagnes de l’Atlas.Superficie : 400 m² Il se compose de :Au 4e étage : Accès avec escalier et ascenseur Entrée Toilettes invités 1 Vaste Séjour d’une hauteur de 6m avec salon cheminée 1 Coin bureau et une petite bibliothèque…","feat":["Jardin paysager","Terrasse","Vue Atlas","Cheminée"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAJ68"},{"slug":"achat-appartement-marrakech-majorelle-apmaj69","title":"Beau Duplex situé dans une résidence neuve, calme et sécurisée","type":"appartement","tx":"achat","loc":"Majorelle","price":220000,"priceText":"220 000€","ch":2,"sdb":1,"hab":130,"ter":null,"desc":"Beau Duplex situé dans une résidence neuve, calme et sécurisée au quartier Majorelle, à 5 minutes du centre-ville.Superficie habitable : 130 m2Il se compose de :1 salon avec télévision au RDC1 Salon à l’étage2 Chambres à l’étage avec climatisation réversible1 Salle de bain à l’étage1 Cuisine entièrement équipée Toilettes invités Divers :Grande cour de 37 m2 avec jacuzzi, transats, coin salle à manger Buanderie…","feat":["Piscine","Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAJ69"},{"slug":"achat-appartement-marrakech-route-de-casablanca-amarca1","title":"Très bel Appartement situé en Rez-de-jardin d’une belle résidence calme et sécurisée","type":"appartement","tx":"achat","loc":"Route De Casablanca","price":205000,"priceText":"205 000€","ch":2,"sdb":1,"hab":null,"ter":107,"desc":"Très bel Appartement situé en Rez-de-jardin d’une belle résidence calme et sécurisée sur la route de Casablanca à 10 minutes du centre-ville de Marrakech.Superficie: 107 m2Il se compose de :1 Agréable salon avec télévision donnant sur une terrasse couverte1 Salle à manger2 Chambres avec climatisation réversible1 Salle de bain 1 Cuisine entièrement équipée et avec une porte donnant sur une terrasse Toilettes invités…","feat":["Piscine","Jardin paysager","Terrasse","Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMARCA1"},{"slug":"achat-appartement-marrakech-route-de-casablanca-amarca2","title":"Appartement Meublé avec Terrasse &amp; Piscine","type":"appartement","tx":"achat","loc":"Route De Casablanca","price":147000,"priceText":"147 000€","ch":1,"sdb":1,"hab":60,"ter":75,"desc":"Situé au dernier étage d’une résidence fermée et sécurisée sur la Route de Casablanca, cet appartement titré offre un cadre de vie agréable, lumineux et fonctionnel. Une belle opportunité d’investissement clé en main à Marrakech, à seulement 7 minutes du centre-ville.Les atouts du bien :• Superficie habitable : 60 m²• Terrasse couverte : 15 m²• Dernier étage• Résidence sécurisée avec piscine collective• Appartement…","feat":["Piscine","Terrasse"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMARCA2"},{"slug":"achat-appartement-marrakech-route-de-ouarzazate-amaouar2","title":"Beau Duplex contemporain au sein d’une très belle résidence sécurisée avec piscine","type":"appartement","tx":"achat","loc":"Route De Ouarzazate","price":350000,"priceText":"350 000€","ch":3,"sdb":3,"hab":167,"ter":233,"desc":"Beau Duplex contemporain au sein d’une très belle résidence sécurisée bénéficiant de parties communes soignées et d’une magnifique piscine commune avec accès privé pied dans l’eau Superficie totale : 233 m2Superficie habitable : 167 m2Superficie terrasse : 31 m2 Superficie jardin : 33 m2Il se compose de :RDCGrand salon avec Tv Salle à manger Cuisine aménagée Toilette invités1 Suite avec salle de bain1er étage :2…","feat":["Piscine","Jardin paysager","Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAOUAR2"},{"slug":"achat-appartement-marrakech-route-de-ouarzazate-amaouar4","title":"Très bel appartement contemporain lumineux au premier étage d’une très belle résidence sécurisée","type":"appartement","tx":"achat","loc":"Route De Ouarzazate","price":362000,"priceText":"362 000€","ch":2,"sdb":2,"hab":133,"ter":null,"desc":"Très bel appartement traversant contemporain lumineux au premier étage d’une très belle résidence sécurisée bénéficiant de parties communes soignées et d’une magnifique piscine commune Superficie habitable : 133 m2Il se compose de :Grand salon Tv avec cheminée Salle à manger Cuisine équipée Toilette invitée2 Chambres chacune avec salle de bain, double placards, climatisation réversible, petite terrasse Divers :Salle…","feat":["Piscine","Terrasse","Parking privé","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAOUAR4"},{"slug":"achat-appartement-marrakech-victor-hugo-amavh19","title":"Très bel appartement situé au 3ème étage d’une résidence sécurisée de haut standing","type":"appartement","tx":"achat","loc":"Victor Hugo","price":340300,"priceText":"340 300€","ch":3,"sdb":3,"hab":116,"ter":null,"desc":"Très bel appartement situé au 3ème étage d’une résidence sécurisée de haut standing en plein cœur du Guéliz, à quelques pas du lycée français Victor Hugo.Superficie : 116 m2Il se compose de :1 Salon avec terrasse1 Cuisine américaine moderne équipée (Bosch)& plan de travail en HPL, lave-linge et lave-vaisselle3 Chambres avec climatisation réversible, terrasse2 Salles de bain Toilettes en bloc WC Geberit & douche…","feat":["Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAVH19"},{"slug":"achat-appartement-marrakech-victor-hugo-amavh23","title":"Bel appartement situé au 4ème étage d’une résidence à quelques minutes à pied du lycée français Victor Hugo","type":"appartement","tx":"achat","loc":"Victor Hugo","price":195000,"priceText":"195 000€","ch":3,"sdb":1,"hab":null,"ter":122,"desc":"Bel appartement situé au 4ème étage d’une résidence à quelques minutes à pied du lycée français Victor Hugo Superficie: 122 m2Il se compose de :1 Salon marocain 1 Salon plus convivial 1 Coin salle à manger1 Cuisine entièrement équipée 1 Arrière cuisine pour rangements3 Chambres avec placard, terrasse, climatisation réversible1 Salle de bain Toilettes invités Divers:Belle et grande Terrasse Parking titré de 26…","feat":["Terrasse","Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAVH23"},{"slug":"achat-riad-marrakech-medina-rymam109","title":"Magnifique Maison d&#039;Hôtes de très haut standing construite au 18ème siècle","type":"riad","tx":"achat","loc":"Medina","price":1890000,"priceText":"1 890 000€","ch":6,"sdb":6,"hab":526,"ter":1300,"desc":"Magnifique Maison d'Hôtes de très haut standing située juste à côté du Palais Royal et des parties les plus anciennes et majestueuses de la Médina.Elle vous accueille pour découvrir l'essence pure et vraie des traditions marocaine et dans la douceur dans la somptueuse atmosphère orientale d'un palais royal avec son design ancestral et ses odeurs magnifiques.","feat":[],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAM109"},{"slug":"achat-riad-marrakech-medina-rymam311","title":"Très beau Riad très accueillant au caractère authentique en plein centre de la médina","type":"riad","tx":"achat","loc":"Medina","price":915000,"priceText":"915 000€","ch":10,"sdb":10,"hab":null,"ter":null,"desc":"Très beau Riad très accueillant au caractère authentique en plein centre de la médina et à 750 m de la célèbre place Jamaa El Fna.Il se compose de :10 Belles chambres décorées avec soin, chacune avec salle de bain, climatisation réversible Magnifique Patio avec piscine Patio aménagé avec tables et chaises pour les repas Salon Marocain Rooftop aménagé en salle à manger et coins repos Transats, avec une vue imprenable…","feat":["Piscine","Vue Atlas","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg"],"ref":"RYMAM311"},{"slug":"achat-riad-marrakech-medina-rymam315","title":"Magnifique Riad , moderne , idéalement situé dans le magnifique quartier de la Kasbah","type":"riad","tx":"achat","loc":"Medina","price":1320000,"priceText":"1 320 000€","ch":10,"sdb":10,"hab":null,"ter":173,"desc":"Magnifique Riad , moderne , idéalement situé dans le magnifique quartier de la Kasbah à 10 minutes à pieds de la place Jemaa El Fna .Superficie : 173 m2Il se compose de :Réception Toilettes d’invités 10 Belles chambres décorées avec soin, chacune avec salle de bain, climatisation/ chauffage 1 Beau Patio avec salon et Cheminé 1 hammam Beldi avec table de massage 1 Cuisine entièrement aménagée1 Rooftop aménagée avec…","feat":["Hammam","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAM315"},{"slug":"achat-riad-marrakech-medina-rymam317","title":"Riad d’exception au cadre luxueux","type":"riad","tx":"achat","loc":"Medina","price":1800000,"priceText":"1 800 000€","ch":8,"sdb":8,"hab":962,"ter":null,"desc":"Riad d’exception au cadre luxueux en plein centre de la médina et à quelques minutes de la célèbre place Jamaa El Fna.Superficie habitable : 962 m2Il se compose de :Plusieurs Salons magnifiques6 Belles chambres décorées avec soin, chacune avec salle de bain, salon Une douria attenante de 2 chambres avec salle de bain, coin salon1 Beau Patio aménagé et joliment décoré1 piscine 1 Cuisine entièrement équipée1 Rooftop…","feat":["Piscine"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAM317"},{"slug":"achat-riad-marrakech-medina-rymam324","title":"Une jolie Douria dans la médina","type":"riad","tx":"achat","loc":"Medina","price":390000,"priceText":"390 000€","ch":4,"sdb":4,"hab":120,"ter":null,"desc":"Une jolie Douria dans la médina de Marrakech à quelques minutes de la place Djemaa El Fna.Superficie habitable: 120 m2Elle se compose de :1 Hall1 Salon 4 Chambres avec salle de bain, climatisation réversible1 Cuisine Toilette invités1 Toit terrasse Atouts :Facile d’accès A 3 minutes du parking Riad Laarousse Prix de vente: 390.000 euros","feat":["Terrasse","Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAM324"},{"slug":"achat-riad-marrakech-medina-rymam327","title":"Joli Riad situé dans le quartier Bab Ghmat","type":"riad","tx":"achat","loc":"Medina","price":null,"priceText":"Sur demande","ch":5,"sdb":5,"hab":135,"ter":null,"desc":"Exclusivité KNAJoli Riad situé dans le quartier Bab Ghmat de Marrakech à 15 minutes de marche de la place Jaama El Fna ou de la fameuse Mosquée Koutoubia et à 10 minutes à pied du centre-ville de Marrakech.Superficies :Rez-de-chaussée : 135 m²Étage : 135 m²Terrasse : 135 m²Il se compose de :1 Jolie Réception1 Patio avec une fontaine aménagé en espaces restauration et joliment décoré1 Agréable Salon marocain5…","feat":["Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAM327"},{"slug":"achat-riad-marrakech-medina-rymam329","title":"Charmant Riad situé dans la médina de Marrakech","type":"riad","tx":"achat","loc":"Medina","price":450000,"priceText":"450 000€","ch":4,"sdb":4,"hab":null,"ter":89,"desc":"Charmant Riad situé dans la médina de Marrakech à environ 15 minutes à pied de la place Jaama El Fna.Superficie au sol: 89 m2Il se compose de :RDC :1 Hall1 Patio couvert équipé d’un toit électrique1 Cuisine américaine équipée1 Bhou (salon traditionnel marocain)1 Buanderie Toilettes invités A l’étage :4 Chambres avec chacune une salle de bain attenante, climatisation réversible Toit :Terrasse avec une petite piscine1…","feat":["Piscine","Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAM329"},{"slug":"achat-riad-marrakech-medina-rymam330","title":"Charmant Riad situé dans la médina de Marrakech","type":"riad","tx":"achat","loc":"Medina","price":450000,"priceText":"450 000€","ch":4,"sdb":4,"hab":null,"ter":75,"desc":"Charmant Riad situé dans la médina de Marrakech à environ 5 minutes à pied de la place Jaama El Fna.Superficie au sol: 75 m2Il se compose de :RDC :1 Hall1 Patio couvert vitré1 Salon1 Salle à manger1 Cuisine équipée1 Buanderie Toilettes invités1er étage :2 Chambres avec chacune une salle de bain attenante, climatisation réversible2ème étage :2 Chambres avec chacune une salle de bain attenante, climatisation…","feat":["Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAM330"},{"slug":"achat-riad-marrakech-medina-rymam331","title":"Charmant Riad situé dans la médina","type":"riad","tx":"achat","loc":"Medina","price":598000,"priceText":"598 000€","ch":5,"sdb":5,"hab":null,"ter":150,"desc":"Charmant Riad situé dans la médina de Marrakech à quelques minutes du centre de Marrakech et des jardins Majorelle.Superficie au sol: 150 m2Il se compose de :1 Hall1 Joli Patio 1 Bassin1 Cuisine équipée1 Bhou (salon traditionnel marocain)1 Buanderie5 Chambres avec chacune une salle de bain attenante avec baignoire spa et douche, coin salon, télévision à écran plat, coffre-fort, climatisation réversible Toilettes…","feat":["Piscine","Jardin paysager","Hammam","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAM331"},{"slug":"achat-riad-marrakech-medina-rymam332","title":"Charmant Riad situé dans le quartier de la Kasbah","type":"riad","tx":"achat","loc":"Medina","price":680000,"priceText":"680 000€","ch":6,"sdb":6,"hab":null,"ter":117,"desc":"Charmant Riad situé dans le quartier de la Kasbah à quelques minutes de la place Jaama El Fna.Superficie au sol: 117 m2 (sur 3 niveaux)Il se compose de :1 Patio avec une petite piscine agréable et un espace repas6 Belles Chambres avec salle de bain, climatisation réversible1 Cuisine équipée Toit:1 Terrasse aménagée en salon Atouts :Facile d’accès en voiture Possibilité de se garer juste devant le riad Actuellement…","feat":["Piscine","Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAM332"},{"slug":"achat-riad-marrakech-proche-de-medina-rymam118","title":"Superbe Riad Maison d’hôtes titré niché au sein de la Médina de Marrakech","type":"riad","tx":"achat","loc":"Proche De Medina","price":1998000,"priceText":"1 998 000€","ch":13,"sdb":13,"hab":450,"ter":null,"desc":"Superbe Riad Maison d’hôtes titré niché au sein de la Médina de Marrakech alliant une Architecture traditionnelle et moderne Il bénéficie d’un emplacement idéal entre les souks adjacents à la célèbre place Jemaa El Fna, les jardins de la Koutoubia, de Majorelle et de Gueliz Superficie habitable: 420 m2Il se compose de :RDCDe nombreux espaces de vie 2 Patios Salon cheminée Salon marocain moderne Salon patio Salle à…","feat":["Jardin paysager","Cheminée"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg"],"ref":"RYMAM118"},{"slug":"achat-villa-marrakech-agdal-vmaa203","title":"Très belle villa contemporaine idéalement située dans le quartier de l’Agdal","type":"villa","tx":"achat","loc":"Agdal","price":2795000,"priceText":"2 795 000€","ch":7,"sdb":7,"hab":880,"ter":2400,"desc":"Très belle villa contemporaine idéalement située dans le quartier de l’Agdal à 7 minutes du centre-ville de Marrakech.Superficie du terrain : 2.400 m2Superficie habitable : 880 m2Elle se compose de :RDCDouble salon spacieux donnant sur la terrasse grâce à de grandes baies vitrées avec cheminée1 Salle à manger pour 8 personnes1 Espace bibliothèque1 Chambre avec salle de bain, climatisation réversible1 Suite avec…","feat":["Terrasse","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAA203"},{"slug":"achat-villa-marrakech-al-maaden-vmamaa41","title":"Villa d’Exception en Front de Golf","type":"villa","tx":"achat","loc":"Al Maaden","price":3475000,"priceText":"3 475 000€","ch":7,"sdb":7,"hab":1200,"ter":3040,"desc":"Villa d’Exception en Front de Golf — Marrakech7 Chambres • 1 200 m² habitables • Terrain de 3 040 m² • Piscine Chauffée Située au cœur d’un prestigieux domaine golfique de Marrakech, cette magnifique villa contemporaine en front de golf offre un cadre de vie rare, élégant et paisible.Édifiée sur un superbe terrain paysagé de 3 040 m², la propriété développe environ 1 200 m² habitables et bénéficie d’une vue dégagée…","feat":["Piscine"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAMAA41"},{"slug":"achat-villa-marrakech-amelkis-vmaame610","title":"Belle Villa d’un style mixte marocain moderne","type":"villa","tx":"achat","loc":"Amelkis","price":945000,"priceText":"945 000€","ch":4,"sdb":4,"hab":640,"ter":1158,"desc":"Belle Villa d’un style mixte marocain moderne située à Amelkis à 15 mn du centre-ville.Elle est entourée des plus prestigieux golfs de Marrakech à Amelkis.Surface du terrain : 1158 m2Surface habitable : 640 m2Elle se compose de :RDCHall d’entrée4 Salons dont un avec cheminée1 Salle à manger1 Grande cuisine américaine entièrement équipée avec îlot central Toilette invitée1ier étage :1 Vaste Master Suite comprenant 2…","feat":["Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAME610"},{"slug":"achat-villa-marrakech-amelkis-vmaame625","title":"Magnifique Villa de prestige située à côté de la résidence golfique Amelkis","type":"villa","tx":"achat","loc":"Amelkis","price":4000000,"priceText":"4 000 000€","ch":10,"sdb":10,"hab":1200,"ter":6700,"desc":"Magnifique Villa de prestige située à côté de la résidence golfique Amelkis à 15 minutes du centre-ville de Marrakech.Superficie du terrain : 6.700 m2Superficie habitable : 1.200 m2Elle se compose de :1 Jolie hall d’entrée aménagé en petit salon1 Grand double salon avec cheminées, piano, de grandes baies vitrées donnant sur la terrasse1 Espace plus convivial 1 Salon vitré avec salle à manger1 Salon marocain avec…","feat":["Terrasse","Cheminée"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAME625"},{"slug":"achat-villa-marrakech-amelkis-vmaame627","title":"Propriété d’Exception au Cœur d’un Golf Prestigieux","type":"villa","tx":"achat","loc":"Amelkis","price":null,"priceText":"Sur demande","ch":6,"sdb":6,"hab":2800,"ter":20000,"desc":"Propriété d’Exception au Cœur d’un Golf Prestigieux de Marrakech Une signature architecturale rare entre nature, lumière et art de vivre Nichée au sein de l’un des golfs les plus prestigieux de Marrakech, cette propriété unique s’impose comme une véritable œuvre d’art architecturale. Déployée sur un somptueux domaine paysager de 2 hectares, et développant près de 2 800 m² habitables, elle offre un cadre de vie d’une…","feat":[],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAME627"},{"slug":"achat-villa-marrakech-amelkis-vmaame628","title":"Somptueuse villa contemporaine","type":"villa","tx":"achat","loc":"Amelkis","price":2195000,"priceText":"2 195 000€","ch":4,"sdb":4,"hab":450,"ter":901,"desc":"Située au cœur du prestigieux Amelkis Golf Club, cette somptueuse villa contemporaine allie élégance, volumes généreux et prestations haut de gamme dans un environnement résidentiel exclusif et sécurisé.Édifiée sur un terrain de 901 m² avec une surface construite d’environ 450 m², cette propriété séduit par son architecture raffinée, ses magnifiques espaces de vie et son atmosphère luxueuse ouverte sur les…","feat":[],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAME628"},{"slug":"achat-villa-marrakech-bab-atlas-vmaba556","title":"Très belle Villa de grand standing d’architecture moderne, au sein d&#039;un magnifique domaine sécurisé","type":"villa","tx":"achat","loc":"Bab Atlas","price":2600000,"priceText":"2 600 000€","ch":5,"sdb":5,"hab":953,"ter":5712,"desc":"Très belle Villa de grand standing d’architecture moderne, au sein d'un magnifique domaine sécurisé dans le quartier de Bab Atlas de la Palmeraie de Marrakech Superficie habitable : 953 m2Superficie du terrain : 5.712 m2Elle se compose de :Sous-Sol : 83 m22 Chambres du personnel chacune avec salle de bain1 Buanderie non équipée2 Locaux techniques RDC : 720 m23 Chambres dont 1 master chacune avec salle de bain,…","feat":["Vue Atlas","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMABA556"},{"slug":"achat-villa-marrakech-palmeraie-vmap353","title":"Très belle Villa de style oriental face aux montagnes de l’Atlas","type":"villa","tx":"achat","loc":"Palmeraie","price":5200000,"priceText":"5 200 000€","ch":5,"sdb":5,"hab":2000,"ter":20000,"desc":"Très belle Villa de style oriental face aux montagnes de l’Atlas située dans la Palmeraie Superficie du terrain : 2 hectares Superficie habitable : 2000 m2 Elle se compose de :5 Suites chacune avec salle de bain et dressing3 Salons de réception au rez de chaussée 2 Salons à l'étage / Bar Salle à manger Cuisine équipée Spa :Salle de sport Hammam Jacuzzi Sous-sol :2ème cuisine Buanderie Lingerie Chambres de service…","feat":["Piscine","Jardin paysager","Vue Atlas","Hammam"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAP353"},{"slug":"achat-villa-marrakech-palmeraie-vmap4","title":"Magnifique Villa de haut standing aux très beaux volumes","type":"villa","tx":"achat","loc":"Palmeraie","price":4000000,"priceText":"4 000 000€","ch":11,"sdb":11,"hab":1200,"ter":10000,"desc":"Magnifique Villa de haut standing aux très beaux volumes située au cœur de la Palmeraie (route de Fès) à 10 mn du centre-ville de Marrakech.Superficie habitable : 1200 m2Superficie du terrain : 1 hectare Elle comprend :11 Spacieuses Chambres et Suites de luxe avec salles de bain et placards disposant chacune d’un coin salon, tv à écran plat, coffre-fort et terrasse Plusieurs salons dont un avec cheminée Salle à…","feat":["Terrasse","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAP4"},{"slug":"achat-villa-marrakech-palmeraie-vmap570","title":"Belle Villa &quot; Maison d&#039;Hôtes&quot; de haut standing et de grand charme dans une atmosphère élégante et raffinée","type":"villa","tx":"achat","loc":"Palmeraie","price":3150000,"priceText":"3 150 000€","ch":11,"sdb":11,"hab":1700,"ter":10000,"desc":"Belle Villa \" Maison d'Hôtes\" de haut standing et de grand charme dans une atmosphère élégante et raffinée au tout début du circuit de la palmeraie de Marrakech. Elle réserve à ses visiteurs une surprise de taille : un immense jardin luxuriant parsemé de palmiers, d’oliviers centenaires qui protègent 2 piscines prévue pour maintenir une température idéale toute l’année tout en reflétant l’art de vivre marocain et le…","feat":["Piscine","Jardin paysager"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg"],"ref":"VMAP570"},{"slug":"achat-villa-marrakech-proche-d-amelkis-vmaame593","title":"Belle Villa de style contemporain orientation Sud &amp; Sud / Est proche Amelkis","type":"villa","tx":"achat","loc":"Proche D Amelkis","price":995000,"priceText":"995 000€","ch":4,"sdb":4,"hab":440,"ter":1006,"desc":"Belle Villa de style contemporain orientation Sud & Sud / Est proche Amelkis Superficie du terrain : 1006 m²Superficie habitable : 440 m² Superficie terrasse : 160 m²Elle se compose de :RDCGrand salon cheminée Salle à manger Cuisine toute équipée1 Chambre avec salle de bain, dressing, climatisation réversible Toilettes invitées A l’étage :3 Chambres chacune avec salle de bain, dressing, , climatisation réversible…","feat":["Piscine","Jardin paysager","Terrasse","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAME593"},{"slug":"achat-villa-marrakech-route-d-amizmiz-vmaami192","title":"Très jolie Villa contemporaine dans une résidence de haut standing","type":"villa","tx":"achat","loc":"Route D Amizmiz","price":840000,"priceText":"840 000€","ch":4,"sdb":4,"hab":525,"ter":966,"desc":"Très jolie Villa contemporaine dans une résidence de haut standing située à 8 km du centre-ville de Marrakech.Superficie du terrain arboré et titré : 966 m2 / Superficie habitable : 525 m2 sur 3 niveaux Elle dispose de :RDC:1 Très grand séjour avec grandes baies vitrées et cheminée + rangements1 Toilette invités1 Cuisine fermée Grande Terrasse donnant sur la piscine et jardin arboré Salon extérieur en décaissé1…","feat":["Piscine","Jardin paysager","Terrasse","Hammam","Parking privé","Cheminée"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAMI192"},{"slug":"achat-villa-marrakech-route-d-amizmiz-vmaami200","title":"Jolie Villa moderne de plain-pied située dans une résidence sécurisée de 19 villas","type":"villa","tx":"achat","loc":"Route D Amizmiz","price":620000,"priceText":"620 000€","ch":3,"sdb":3,"hab":186,"ter":1023,"desc":"Jolie Villa moderne de plain-pied située dans une résidence sécurisée de 19 villas, à 15 minutes du centre-ville de Marrakech sur la route d’Amizmiz.Superficie habitable : 186 m2 Superficie du terrain : 1.023 m2 Elle se compose de :1 Agréable salon très lumineux grâce à ses grandes baies vitrées donnant sur la terrasse 1 Salle à manger pour 6 personnes3 Suites avec salle de bain, placard, terrasse, climatisation…","feat":["Jardin paysager","Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAMI200"},{"slug":"achat-villa-marrakech-route-d-amizmiz-vmaami201","title":"Résidence de villas d&#039;exception - Programme exclusif","type":"villa","tx":"achat","loc":"Route D Amizmiz","price":781000,"priceText":"781 000€","ch":3,"sdb":5,"hab":379,"ter":770,"desc":"Au sein d’un environnement privilégié, cette résidence confidentielle et sécurisée, située sur la route d’Amizmiz à 10/12 minutes du centre-ville de Marrakech, propose une collection limitée de villas contemporaines, conçues pour offrir un cadre de vie alliant luxe, confort et sérénité.Chaque propriété a été pensée avec une attention particulière portée aux volumes, à la qualité des prestations et à l’art de vivre,…","feat":[],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAMI201"},{"slug":"achat-villa-marrakech-route-d-amizmiz-vmaami203","title":"Superbe Villa Contemporaine","type":"villa","tx":"achat","loc":"Route D Amizmiz","price":1495000,"priceText":"1 495 000€","ch":5,"sdb":5,"hab":680,"ter":1278,"desc":"Superbe Villa Contemporaine – Route d’Amizmiz Km 5 – Domaine Sécurisé Située à seulement quelques minutes de Marrakech, au cœur d’un domaine sécurisé très recherché sur la route d’Amizmiz, cette magnifique villa contemporaine offre un cadre de vie exceptionnel alliant luxe, confort et sérénité.Édifiée sur un terrain de 1 278 m² avec une surface habitable de 680 m², cette propriété séduit immédiatement par son…","feat":[],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAMI203"},{"slug":"achat-villa-marrakech-route-de-casablanca-vmarc4","title":"Maison d’hôtes de style mixte dotée d’une vue à 360°","type":"villa","tx":"achat","loc":"Route De Casablanca","price":1150000,"priceText":"1 150 000€","ch":13,"sdb":13,"hab":900,"ter":6000,"desc":"Maison d’hôtes de style mixte dotée d’une vue à 360° à seulement 30 mn du centre-ville Véritable havre de paix Superficie du terrain : 6000m2 / 4000m2 non exploité Superficie habitable : 900 m2Roof top d’environ 350m2 - vue à 360'Elle se compose de :RDC:Vaste patio ouvert Salons Salle à manger intérieure Toilette invités 2 Fontaines en cascades Cuisine entièrement équipée 7 Suites et chambres chacune avec salle de…","feat":["Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg"],"ref":"VMARC4"},{"slug":"achat-villa-marrakech-route-de-l-ourika-vmaro625","title":"Elégante propriété moderne située dans une résidence sécurisée de 4 villas","type":"villa","tx":"achat","loc":"Route De L Ourika","price":1190000,"priceText":"1 190 000€","ch":4,"sdb":4,"hab":350,"ter":2500,"desc":"Elégante propriété moderne située dans une résidence sécurisée de 4 villas sur la route de l'Ourika à 20 minutes du centre villa de Marrakech.Superficie du terrain : 2.500 m2Superficie habitable : 350 m2Elle se compose de :1 Grand salon lumineux avec cheminée et de grandes baies vitrées donnant sur la terrasse1 Salle à manger en faveur de 8 personnes 4 Chambres chacune avec grande salle de bain, climatisation…","feat":["Jardin paysager","Terrasse","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMARO625"},{"slug":"achat-villa-marrakech-route-de-l-ourika-vmaro630","title":"Jolie Villa moderne de style contemporain située dans une résidence sécurisée de 4 villas","type":"villa","tx":"achat","loc":"Route De L Ourika","price":935000,"priceText":"935 000€","ch":4,"sdb":4,"hab":400,"ter":2200,"desc":"Jolie Villa moderne de style contemporain située dans une résidence sécurisée de 4 villas sur la route de l’Ourika à 15/20 minutes du centre-ville de Marrakech.Superficie du terrain : 2.200 m2Superficie habitable : 400 m2Elle se compose de :1 Grand Salon avec télévision et bien lumineux grâce à de grandes baies vitrées1 Autre salon encastré1 Salle à manger pour 8 personnes 1 Grande Cuisine américaine entièrement…","feat":[],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMARO630"},{"slug":"achat-villa-marrakech-route-de-l-ourika-vmaro631","title":"Propriété d’exception face à l’Atlas","type":"villa","tx":"achat","loc":"Route De L Ourika","price":850000,"priceText":"850 000€","ch":4,"sdb":4,"hab":450,"ter":5888,"desc":"Propriété d’exception face à l’Atlas – Route de l’Ourika, Marrakech A seulement quelques minutes du centre de Marrakech, sur la très prisée route de l’Ourika, cette propriété d’exception s’épanouit dans un environnement naturel rare, au cœur d’un domaine privé et confidentiel composé de seulement six villas, entièrement sécurisé avec gardien.","feat":["Vue Atlas"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMARO631"},{"slug":"achat-villa-marrakech-route-de-l-ourika-vmaro634","title":"Élégante Villa contemporaine","type":"villa","tx":"achat","loc":"Route De L Ourika","price":415000,"priceText":"415 000€","ch":4,"sdb":2,"hab":281,"ter":500,"desc":"Élégante Villa contemporaine avec Piscine Privée4 chambres • 281 m² construits • Terrain d’environ 500 m²Située sur la très recherchée Route de l’Ourika, à seulement 15 minutes du centre de Marrakech, cette élégante villa contemporaine séduit par son architecture épurée, ses belles ouvertures et ses volumes baignés de lumière.Implantée sur un terrain d’environ 500 m², elle développe une surface construite de 281 m²…","feat":["Piscine"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMARO634"},{"slug":"achat-villa-marrakech-route-de-ouarzazate-vmaoua151","title":"Propriété d’exception avec spa privé","type":"villa","tx":"achat","loc":"Route De Ouarzazate","price":1390000,"priceText":"1 390 000€","ch":6,"sdb":6,"hab":550,"ter":5100,"desc":"Située au sein d’une résidence sécurisée sur la route de Ouarzazate, à seulement 25 minutes du centre-ville de Marrakech, cette somptueuse villa de standing offre un cadre de vie rare, alliant luxe, espace et prestations haut de gamme.Implantée sur un magnifique terrain de 5 100 m² avec une surface habitable de 550 m², la propriété séduit par ses volumes généreux, son environnement verdoyant et son exposition plein…","feat":[],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAOUA151"},{"slug":"achat-villa-marrakech-route-de-tahanaout-vmata10","title":"Magnifique villa de style mixte située à 20 minutes du centre ville de Marrakech","type":"villa","tx":"achat","loc":"Route De Tahanaout","price":1995000,"priceText":"1 995 000€","ch":6,"sdb":6,"hab":830,"ter":10000,"desc":"Magnifique villa de style mixte située à 20 minutes du centre ville de Marrakech sur la route de Tahanaoute Superficie du terrain : 10.000 m2 Superficie construite : 830 m2Elle se compose de :RDC1 Grand séjour avec 2 salons avec cheminée donnant sur la terrasse par de grandes baies vitrées1 Beau salon cinéma avec une bibliothèque1 Salon marocain1 Salle à manger en faveur de 10 personnes1 Bar équipé1 Grande cuisine…","feat":["Terrasse","Cheminée"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMATA10"},{"slug":"achat-villa-marrakech-sidi-abdellah-ghiat-vmasg4","title":"Superbe Villa au caractère et design de style mixte dotée d’un magnifique parc arboré et fontaines","type":"villa","tx":"achat","loc":"Sidi Abdellah Ghiat","price":1600000,"priceText":"1 600 000€","ch":4,"sdb":4,"hab":600,"ter":10200,"desc":"Superbe Villa au caractère et design de style mixte dotée d’un magnifique parc arboré et fontaines Elle fait partie intégrante d'un domaine privé et sécurisé qui offre une vue imprenable sur les montagnes de l'Atlas à 30 mn du centre-ville.Jardin luxuriant, court de tennis en terre battue, salle de sport en plein air, piscine à couper le souffle et magnifique patio Superficie du terrain : 12.","feat":["Piscine","Jardin paysager","Vue Atlas"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMASG4"},{"slug":"achat-villa-marrakech-targa-vmat91","title":"Elegante Villa contemporaine","type":"villa","tx":"achat","loc":"Targa","price":970000,"priceText":"970 000€","ch":4,"sdb":3,"hab":420,"ter":1848,"desc":"Exclusivité KNAUn havre de paix à seulement 10 minutes du centre-ville Nichée dans un environnement résidentiel calme et recherché à Targa, cette belle villa contemporaine séduit par ses volumes généreux, sa luminosité et son magnifique jardin arboré. Édifiée sur un terrain de 1 848 m² et développant 420 m² habitables, elle offre un cadre de vie harmonieux où confort, intimité et convivialité se rencontrent.","feat":["Jardin paysager"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAT91"},{"slug":"location-complexe-marrakech-bab-atlas-vmaba510","title":"Magnifique propriété beldi chic","type":"villa","tx":"location","loc":"Bab Atlas","price":6600,"priceText":"6 600€","ch":34,"sdb":34,"hab":1000,"ter":10000,"desc":"Magnifique propriété beldi chic située à Bab Atlas à 20 minutes du centre-ville de Marrakech Elle se compose de :1 Belle entrée1 Hall1 Salon1 Restaurant dans le lobby de 24 couverts (35 couverts avec la terrasse)1 Restaurant en roof top de 30 couverts1 Tente construite près de la piscine d’une capacité de 70 couverts1 Cuisine professionnelle toute équipée34 Chambres avec salle de bain, télévision, placards,…","feat":["Piscine","Terrasse","Vue Atlas","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMABA510"},{"slug":"location-longue-duree-appartement-marrakech-boulevard-mohamed-vi-apmamvi04","title":"Bel appartement situé au 2ème étage d’une résidence sécurisée","type":"appartement","tx":"location","loc":"Boulevard Mohamed Vi","price":1450,"priceText":"1 450€","ch":3,"sdb":2,"hab":95,"ter":null,"desc":"Bel appartement situé au 2ème étage d’une résidence sécurisée sur le boulevard Mohamed VI Superficie: 95 m2Il se compose de :1 Agréable salon avec télévision à écran plat donnant sur une terrasse1 Coin salle à manger pour 6 personnes1 Cuisine entièrement équipée3 Chambres avec climatisation réversible 1 Salle de bain séparée1 Toilette invités Divers:Terrasse aménagée Un joli jardin dans la résidence Piscine…","feat":["Piscine","Jardin paysager","Terrasse","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"APMAMVI04"},{"slug":"location-longue-duree-appartement-marrakech-hivernage-amah846","title":"Bel Appartement situé au 3ème étage d’une résidence sécurisée à l’Hivernage.","type":"appartement","tx":"location","loc":"Hivernage","price":1500,"priceText":"1 500€","ch":1,"sdb":1,"hab":80,"ter":100,"desc":"Bel Appartement situé au 3ème étage d’une résidence sécurisée à l’Hivernage.Superficie habitable : 80 m2 dont 20 m2 de terrasse Il se compose de :1 Salon avec cheminée et télévision1 Cuisine américaine entièrement équipée1 Chambre avec salle de bain (douche), climatisation réversible Toilettes invités1 Terrasse avec petit coin salon et petit coin salle à manger Divers:Climatisation réversible Piscine en roof top…","feat":["Piscine","Terrasse","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAH846"},{"slug":"location-longue-duree-appartement-marrakech-hivernage-amah866","title":"Bel appartement moderne situé au 1er étage d’une résidence sécurisée","type":"appartement","tx":"location","loc":"Hivernage","price":1600,"priceText":"1 600€","ch":2,"sdb":2,"hab":null,"ter":110,"desc":"Bel appartement moderne situé au 1er étage d’une résidence sécurisée à l’Hivernage Superficie habitable : 110 m2Il se compose de :1 Grand séjour avec grande télévision1 Coin salle à manger pour 6 personnes1 Cuisine entièrement équipée 1 Chambre avec placards, climatisation réversible1 Salle de bain séparée1 Grande suite avec salle de bain, télévision, placards, climatisation réversible Divers :Parking couvert Atouts…","feat":["Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAH866"},{"slug":"location-longue-duree-appartement-marrakech-hivernage-amah869","title":"Appartement 2 Chambres – Hivernage","type":"appartement","tx":"location","loc":"Hivernage","price":1300,"priceText":"1 300€","ch":2,"sdb":2,"hab":73,"ter":null,"desc":"Appartement 2 Chambres – Hivernage, Marrakech Confort & élégance à proximité de la gare Situé dans le très recherché quartier de l’Hivernage, au sein d’une résidence sécurisée à proximité immédiate de la gare des trains, cet appartement de 73 m² offre un cadre de vie agréable, alliant confort moderne et emplacement stratégique.Positionné au 4ᵉ étage avec ascenseur, il bénéficie d’une belle luminosité et d’un…","feat":[],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"AMAH869"},{"slug":"location-longue-duree-villa-marrakech-agdal-vmaag02","title":"Très jolie villa neuve (jamais louée), moderne et décorée avec beaucoup de goût","type":"villa","tx":"location","loc":"Agdal","price":6700,"priceText":"6 700€","ch":4,"sdb":4,"hab":760,"ter":528,"desc":"EXCLUSIVITE KNATrès jolie villa neuve (jamais louée), moderne et décorée avec beaucoup de goût située dans la zone de l’Agdal à 7 minutes du centre-ville de Marrakech, proposant des matériaux et finitions de haut standing.Superficie du terrain : 528 m2Superficie habitable : 760 m2 (3 niveaux)Elle se compose de :RDC :3 Salons dont 1 avec cheminée1 Salle à manger pour 8 personnes1 Chambre avec salle de bain, placard,…","feat":["Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAG02"},{"slug":"location-longue-duree-villa-marrakech-amelkis-vmaamel121","title":"Villa Contemporaine de Prestige","type":"villa","tx":"location","loc":"Amelkis","price":6500,"priceText":"6 500€","ch":4,"sdb":4,"hab":500,"ter":900,"desc":"Située au cœur d’un prestigieux domaine golfique de Marrakech, cette superbe villa contemporaine bénéficie d’un emplacement privilégié avec une vue directe et dominante sur le golf.Édifiée sur un terrain d’environ 900 m², la propriété développe entre 450 et 500 m² habitables, répartis sur trois niveaux entièrement desservis par ascenseur.","feat":[],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAMEL121"},{"slug":"location-palais-marrakech-route-de-l-ourika-vmarour618","title":"Splendide Palais de style mixte, mêlant inspirations persanes, marocaines, indiennes et occidentales","type":"villa","tx":"location","loc":"Route De L Ourika","price":1740,"priceText":"1 740€","ch":5,"sdb":5,"hab":1000,"ter":11000,"desc":"Splendide Palais de style mixte, mêlant inspirations persanes, marocaines, indiennes et occidentales, doté d’une vue spectaculaire sur la chaine de montagne de l’Atlas sur la route de l’Ourika à 25/30 minutes du centre-ville de Marrakech.Superficie du parc : 11.000 m2Superficie habitable : 1.000 m2Il se compose de :Magnifique entrée avec un mur d’eau1 Grand salon aux tonalités crème et gris avec un bassin central et…","feat":["Piscine","Terrasse","Vue Atlas"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg"],"ref":"VMAROUR618"},{"slug":"location-riad-marrakech-medina-rymam1","title":"Magnifique Riad datant du 19ème siècle en location courte durée","type":"riad","tx":"location","loc":"Medina","price":1800,"priceText":"1 800€","ch":8,"sdb":8,"hab":1800,"ter":null,"desc":"Magnifique Riad datant du 19ème siècle se situant dans la médina de Marrakech, à 7 mn de la place Jamaa El Fna Superficie habitable : 1800 m2Il se compose de :6 Chambres chacune avec salle de bain , climatisaiton réversible2 Suites situées dans le jardin chacune avec salle de bain, climatisation réversible1 Salon cheminée1 Salon européen1 Salle à manger Cuisine équipée Spa:Hammam Salle de massage Jacuzzi Divers :2…","feat":["Piscine","Jardin paysager","Hammam","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAM1"},{"slug":"location-riad-marrakech-medina-rymam41","title":"Très beau Riad de standing","type":"riad","tx":"location","loc":"Medina","price":2000,"priceText":"2 000€","ch":7,"sdb":7,"hab":null,"ter":null,"desc":"Très beau Riad de standing situé à 10 minutes du centre-ville Il se compose de :13 Chambres et suites spacieuses chacune avec salle de bain, télévision satellite, connexion Wifi haut débit, dressing, coffre-fort, climatisation réversible1 Restaurant avec une entrée indépendante et pignon sur rue Salons Bar/ Lounge Snack-barÉquipements général :Chambres Non-Fumeurs Coffre-fort Réception ouverte 24h/24Animaux non…","feat":["Piscine","Parking privé","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg"],"ref":"RYMAM41"},{"slug":"location-riad-marrakech-medina-rymamed13","title":"Magnifique Riad idéalement situé en plein cœur de la Médina de Marrakech à la location courte durée","type":"riad","tx":"location","loc":"Medina","price":2200,"priceText":"2 200€","ch":18,"sdb":18,"hab":null,"ter":null,"desc":"Beau Riad idéalement situé en plein cœur de la Médina de Marrakech et à proximité du palais Bahia, des tombeaux Saadiens et de la Medersa Ben Youssef Plongez-vous dans l’atmosphère chaleureuse des palais Arabes ancestraux qui vous remémoreront le luxe des splendeurs du passé.Il se compose de :3 Patios Andalou décorés et aménagés dans la plus pure tradition marocaine 1 Fontaine de marbre 1 Piscine avec ses pétales de…","feat":["Piscine"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAMED13"},{"slug":"location-riad-marrakech-medina-rymamed42","title":"Magnifique et unique Riad de ce style à l’extrémité nord de la Médina","type":"riad","tx":"location","loc":"Medina","price":800,"priceText":"800€","ch":5,"sdb":5,"hab":null,"ter":null,"desc":"Magnifique et unique Riad de ce style à l’extrémité nord de la Médina Il se compose de :2 Suites chacune avec une salle de bain3 Chambres doubles chacune avec une salle de bain Patio Salons dont un avec cheminée Cuisine équipée Divers :Terrasse Climatisation réversible Haut-parleurs IPod Bluetooth Piscine Restaurant Service en chambre Wifi gratuit Prix de la location par nuit : A partir de 800 euros","feat":["Piscine","Terrasse","Cheminée","Climatisation"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMAMED42"},{"slug":"location-villa-marrakech-amelkis-vmaamel535","title":"Véritable havre de paix à Marrakech","type":"villa","tx":"location","loc":"Amelkis","price":720,"priceText":"720€","ch":5,"sdb":5,"hab":320,"ter":1050,"desc":"Véritable havre de paix à Marrakech, où le confort moderne se marie avec l’authenticité marocaine, cette très belle Villa est située au sein d'une résidence sécurisée à 10/15 mn du centre-ville et à proximité du prestigieux Amelkis Golf Club.Superficie du terrain : 1.050 m2Superficie habitable : 320 m2Elle se compose de :1 Salon lumineux avec télévision et donnant sur la terrasse par de grandes baies vitrées1 Salle…","feat":["Terrasse"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAMEL535"},{"slug":"location-villa-marrakech-amelkis-vmaamel536","title":"Très belle Villa moderne située en front de golf au sein d&#039;un domaine sécurisé, privé et prestigieux","type":"villa","tx":"location","loc":"Amelkis","price":580,"priceText":"580€","ch":4,"sdb":4,"hab":500,"ter":1300,"desc":"Très belle Villa moderne située en front de golf au sein d'un domaine sécurisé, privé et prestigieux, à 15/20 mn du centre-ville de Marrakech.Superficie du terrain : 1.300 m2Superficie habitable : 500 m2Elle se compose de :1 Grand hall d’entrée1 Joli Salon avec cheminée, télévision et donnant sur la terrasse piscine par de grandes baies vitrées1 Coin détente1 Salle à manger en faveur de 10 personnes1 Salon plus…","feat":["Piscine","Terrasse","Cheminée"],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"VMAAMEL536"},{"slug":"location-villa-riad-marrakech-hivernage-rymacv1","title":"Très belle Villa / Riad située au sein d’un Prestigieux Hôtel 5* au carrefour des principaux centres d&#039;intérêts de Marrakech","type":"villa","tx":"location","loc":"Riad Hivernage","price":870,"priceText":"870€","ch":4,"sdb":4,"hab":300,"ter":480,"desc":"Très belle Villa / Riad située au sein d’un Prestigieux Hôtel 5* au carrefour des principaux centres d'intérêts de Marrakech (Médina, Restaurants, Mall...)Superficie totale : 480 m2Superficie habitable : 300 m2Aéroport (10/12 Minutes en voiture)Golf (15 Minutes en voiture)Medina (3 Minutes en voiture)Hivernage et Gueliz (5 Minutes en voiture)Place Jamaa el Fna (5 Minutes en voiture)Medersa Ben Youssef (12 Minutes en…","feat":[],"photos":["photo_01.jpg","photo_02.jpg","photo_03.jpg","photo_04.jpg","photo_05.jpg"],"ref":"RYMACV1"}]</script>
+
+<script type="module">
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import Lenis from "lenis";
+import { createRoot } from "react-dom/client";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { MeshGradient, DotOrbit } from "@paper-design/shaders-react";
+import {
+  ArrowRight, ArrowLeft, ArrowUpRight, Menu, X,
+  MessageCircle, Phone, Mail, MapPin, Sparkles,
+  BedDouble, Bath, Maximize, Maximize2, Check,
+  Waves, Mountain, Trees, Building2, ConciergeBell, TrendingUp,
+  Compass, Facebook, Instagram, Youtube, Linkedin,
+} from "lucide-react";
+import * as THREE from "three";
+import gsap from "gsap";
+import htm from "htm";
+
+const h = (type, props, ...children) =>
+  React.createElement(type === "" ? React.Fragment : type, props, ...children);
+const html = htm.bind(h);
+
+// Failsafe: hide loader after 6s no matter what
+setTimeout(() => document.getElementById("initial-loader")?.classList.add("gone"), 6000);
+// Detect failed module loads (CDN issues): if no React after 10s, show help
+setTimeout(() => {
+  const root = document.getElementById("root");
+  if (root && root.children.length === 0) {
+    const loader = document.getElementById("initial-loader");
+    if (loader) {
+      loader.classList.remove("gone");
+      loader.innerHTML =
+        '<div style="text-align:center;max-width:480px;color:#fff;font-family:Inter,sans-serif;padding:32px;border:1px solid rgba(212,165,90,0.3);background:rgba(0,0,0,0.5);border-radius:16px;backdrop-filter:blur(8px);">' +
+        '<div style="color:#d4a55a;text-transform:uppercase;letter-spacing:0.3em;font-size:11px;margin-bottom:16px;">Chargement interrompu</div>' +
+        '<p style="font-size:14px;line-height:1.7;color:rgba(255,255,255,0.8);">Le site n\'a pas réussi à charger ses ressources externes (Three.js, React) en 10 secondes. Vérifiez votre connexion internet ou réessayez sur une autre connexion (votre 4G mobile par exemple).</p>' +
+        '<button onclick="location.reload()" style="margin-top:20px;padding:10px 24px;background:#d4a55a;color:#000;border:none;border-radius:999px;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;font-weight:500;">Recharger la page</button>' +
+        '</div>';
+    }
+  }
+}, 10000);
+function maybeShowError(message) {
+  const loader = document.getElementById("initial-loader");
+  const root = document.getElementById("root");
+  if (!loader || loader.classList.contains("gone") || (root && root.children.length > 0)) return;
+  loader.innerHTML =
+    '<div style="text-align:center;max-width:80%;color:#fff;font-family:monospace;font-size:13px;line-height:1.6;padding:24px;border:1px solid rgba(255,80,80,0.4);background:rgba(40,0,0,0.4);border-radius:12px;">' +
+    '<div style="color:#ff8888;text-transform:uppercase;letter-spacing:0.3em;font-size:11px;margin-bottom:12px;">Erreur de chargement</div>' +
+    String(message || "").replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c])) +
+    "</div>";
+}
+window.addEventListener("error", (e) => maybeShowError(e.message || e.error));
+window.addEventListener("unhandledrejection", (e) =>
+  maybeShowError(e.reason && (e.reason.message || e.reason))
+);
+
+const BIENS = JSON.parse(document.getElementById("kna-data").textContent);
+const photoUrl = (slug, fname) => "./biens/" + slug + "/" + fname;
+
+const KNA = {
+  name: "Agence KNA",
+  logo: { primary: "KNA", suffix: "Immobilier" },
+  baseline: "L'immobilier de prestige à Marrakech.",
+  tagline: "Villas, riads & appartements d'exception",
+  founded: 2010,
+  phone: "+212 524 45 64 90",
+  phoneRaw: "+212524456490",
+  whatsapp: "+212 6 94 20 06 00",
+  whatsappRaw: "212694200600",
+  email: "contact@agencekna.com",
+  address: "Résidence Hivernage Garden, Rue Camille Cabana, Marrakech",
+  whatsappUrl: (msg) => "https://wa.me/212694200600" + (msg ? "?text=" + encodeURIComponent(msg) : ""),
+};
+const KNA_NAV = [
+  { label: "Acheter", anchor: "villas" },
+  { label: "Louer", anchor: "villas" },
+  { label: "Villas", anchor: "villas" },
+  { label: "Riads", anchor: "villas" },
+  { label: "Contact", anchor: "contact" },
+];
+
+const LOC_COORDS = {
+  "Medina":               { lat: 31.6310, lng: -7.9890 },
+  "Hivernage":            { lat: 31.6261, lng: -7.9985 },
+  "Gueliz":               { lat: 31.6371, lng: -8.0119 },
+  "Palmeraie":            { lat: 31.6747, lng: -7.9522 },
+  "Amelkis":              { lat: 31.6062, lng: -7.9505 },
+  "Agdal":                { lat: 31.5994, lng: -8.0166 },
+  "Route De L Ourika":    { lat: 31.5800, lng: -7.9300 },
+  "Route D Amizmiz":      { lat: 31.5500, lng: -8.0700 },
+  "Route De Ouarzazate":  { lat: 31.5950, lng: -7.9200 },
+  "Route De Casablanca":  { lat: 31.6700, lng: -8.0400 },
+  "Bab Atlas":            { lat: 31.6730, lng: -7.9870 },
+  "Al Maaden":            { lat: 31.5800, lng: -7.9700 },
+  "Route De Tahanaout":   { lat: 31.5300, lng: -7.9700 },
+  "Victor Hugo":          { lat: 31.6360, lng: -8.0140 },
+  "Boulevard Mohamed Vi": { lat: 31.6385, lng: -8.0050 },
+};
+const MARRAKECH_CENTER = { lat: 31.6295, lng: -7.9811 };
+function getCoords(loc) { return LOC_COORDS[loc] || MARRAKECH_CENTER; }
+function formatCoords(c) {
+  const ns = c.lat >= 0 ? "N" : "S";
+  const ew = c.lng >= 0 ? "E" : "W";
+  return Math.abs(c.lat).toFixed(4) + "° " + ns + ", " + Math.abs(c.lng).toFixed(4) + "° " + ew;
+}
+
+const formatPrice = (b) => {
+  if (b.price) {
+    const s = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(b.price);
+    return b.tx === "location" ? s + " / mois" : s;
+  }
+  return b.priceText || "Sur demande";
+};
+const prettyTx = (t) => t === "achat" ? "Vente" : (t === "location" ? "Location" : "");
+
+function PaperBackground({ speed = 0.5 }) {
+  const meshColors = ["#000000", "#0a2a2e", "#d4a55a", "#f5e6c4"];
+  return html`
+    <div aria-hidden="true" class="fixed inset-0 w-screen h-screen z-0 pointer-events-none overflow-hidden bg-black" style=${{ contain: "strict" }}>
+      <${MeshGradient} className="absolute inset-0 w-full h-full" colors=${meshColors} speed=${speed * 0.5} distortion=${0.8} swirl=${0.3} />
+      <div class="absolute inset-0 w-full h-full opacity-50 mix-blend-screen">
+        <${DotOrbit} className="w-full h-full" colors=${["#d4a55a", "#f5e6c4", "#0a2a2e"]} colorBack="#000000" speed=${speed * 1.4} size=${0.04} spreading=${0.6} />
+      </div>
+      <div class="absolute inset-0" style=${{ background: "radial-gradient(ellipse 90% 70% at 50% 40%, transparent 0%, rgba(0,0,0,0.35) 70%, rgba(0,0,0,0.7) 100%)" }}></div>
+      <div class="absolute top-1/4 left-1/3 w-72 h-72 rounded-full blur-3xl pulse-slow" style=${{ background: "radial-gradient(circle, rgba(212,165,90,0.2), transparent 70%)" }}></div>
+      <div class="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-3xl pulse-slow-2" style=${{ background: "radial-gradient(circle, rgba(10,42,46,0.45), transparent 70%)" }}></div>
+    </div>
+  `;
+}
+
+function AnimatedText({ text, className = "", textClassName = "" }) {
+  return html`
+    <div class=${"flex justify-center items-center " + className}>
+      <span class=${"shiny-text inline-block font-medium tracking-[0.3em] uppercase " + textClassName}>${text}</span>
+    </div>
+  `;
+}
+
+function NeonButton({ children, variant = "default", size = "default", onClick, href, external = false, className = "" }) {
+  const base = "neon-btn relative inline-flex items-center justify-center gap-2 border text-center rounded-full transition-colors duration-300 font-medium tracking-wide whitespace-nowrap cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50";
+  const variants = {
+    default: "bg-amber-400/5 hover:bg-amber-400/10 border-amber-400/30 text-amber-100",
+    solid: "bg-amber-400 hover:bg-amber-300 text-black border-transparent",
+    ghost: "border-transparent bg-transparent text-white/80 hover:border-amber-300/40 hover:bg-white/5 hover:text-white",
+    emerald: "bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-400/30 text-emerald-100",
+  };
+  const sizes = { default: "px-7 py-2 text-sm", sm: "px-4 py-1.5 text-xs", lg: "px-10 py-3 text-sm" };
+  const classes = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+  const inner = html`<span class="relative z-10 inline-flex items-center gap-2">${children}</span>`;
+  if (href) {
+    return html`<a href=${href} class=${classes} onClick=${onClick} target=${external ? "_blank" : undefined} rel=${external ? "noopener noreferrer" : undefined}>${inner}</a>`;
+  }
+  return html`<button class=${classes} onClick=${onClick}>${inner}</button>`;
+}
+
+function HorizonHero({ onScrollToHero }) {
+  const canvasRef = useRef(null);
+  const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const refs = useRef({});
+  const [progress, setProgress] = useState(0);
+  const [webglFailed, setWebglFailed] = useState(false);
+
+  useEffect(() => {
+    try {
+      const probe = document.createElement("canvas").getContext("webgl2") || document.createElement("canvas").getContext("webgl");
+      if (!probe) { setWebglFailed(true); return; }
+    } catch (e) { setWebglFailed(true); return; }
+
+    const r = refs.current;
+    try {
+      r.scene = new THREE.Scene();
+      r.scene.fog = new THREE.FogExp2(0x000000, 0.00025);
+      r.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+      r.camera.position.set(0, 20, 100);
+      r.renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true, alpha: true });
+      r.renderer.setSize(window.innerWidth, window.innerHeight);
+      r.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      r.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      r.renderer.toneMappingExposure = 0.6;
+      r.stars = [];
+
+      for (let i = 0; i < 3; i++) {
+        const count = 4000;
+        const geo = new THREE.BufferGeometry();
+        const positions = new Float32Array(count * 3);
+        const colors = new Float32Array(count * 3);
+        const sizes = new Float32Array(count);
+        for (let j = 0; j < count; j++) {
+          const radius = 200 + Math.random() * 800;
+          const theta = Math.random() * Math.PI * 2;
+          const phi = Math.acos(Math.random() * 2 - 1);
+          positions[j*3]   = radius * Math.sin(phi) * Math.cos(theta);
+          positions[j*3+1] = radius * Math.sin(phi) * Math.sin(theta);
+          positions[j*3+2] = radius * Math.cos(phi);
+          const col = new THREE.Color();
+          const pick = Math.random();
+          if (pick < 0.6) col.setHSL(0, 0, 0.85 + Math.random() * 0.15);
+          else if (pick < 0.9) col.setHSL(0.1, 0.6, 0.75);
+          else col.setHSL(0.55, 0.4, 0.7);
+          colors[j*3] = col.r; colors[j*3+1] = col.g; colors[j*3+2] = col.b;
+          sizes[j] = Math.random() * 2 + 0.5;
+        }
+        geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+        geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+        geo.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
+        const mat = new THREE.ShaderMaterial({
+          uniforms: { time: { value: 0 }, depth: { value: i } },
+          vertexShader: "attribute float size; attribute vec3 color; varying vec3 vColor; uniform float time; uniform float depth; void main(){ vColor=color; vec3 pos=position; float a=time*0.05*(1.0-depth*0.3); mat2 rot=mat2(cos(a),-sin(a),sin(a),cos(a)); pos.xy=rot*pos.xy; vec4 mv=modelViewMatrix*vec4(pos,1.0); gl_PointSize=size*(300.0/-mv.z); gl_Position=projectionMatrix*mv; }",
+          fragmentShader: "varying vec3 vColor; void main(){ float d=length(gl_PointCoord-vec2(0.5)); if(d>0.5) discard; float o=1.0-smoothstep(0.0,0.5,d); gl_FragColor=vec4(vColor,o); }",
+          transparent: true,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+        });
+        const points = new THREE.Points(geo, mat);
+        r.scene.add(points);
+        r.stars.push(points);
+      }
+
+      const nebGeo = new THREE.PlaneGeometry(8000, 4000, 80, 80);
+      const nebMat = new THREE.ShaderMaterial({
+        uniforms: {
+          time: { value: 0 },
+          color1: { value: new THREE.Color(0xd4a55a) },
+          color2: { value: new THREE.Color(0x0a2a2e) },
+          opacity: { value: 0.35 },
+        },
+        vertexShader: "varying vec2 vUv; varying float vE; uniform float time; void main(){ vUv=uv; vec3 p=position; float e=sin(p.x*0.01+time)*cos(p.y*0.01+time)*20.0; p.z+=e; vE=e; gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0); }",
+        fragmentShader: "uniform vec3 color1; uniform vec3 color2; uniform float opacity; uniform float time; varying vec2 vUv; varying float vE; void main(){ float m=sin(vUv.x*10.0+time)*cos(vUv.y*10.0+time); vec3 c=mix(color1,color2,m*0.5+0.5); float a=opacity*(1.0-length(vUv-0.5)*2.0); a*=1.0+vE*0.01; gl_FragColor=vec4(c,a); }",
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      });
+      r.nebula = new THREE.Mesh(nebGeo, nebMat);
+      r.nebula.position.z = -1050;
+      r.scene.add(r.nebula);
+
+      const t0 = performance.now();
+      const animate = () => {
+        r.raf = requestAnimationFrame(animate);
+        const t = (performance.now() - t0) * 0.001;
+        r.stars.forEach((s) => { if (s.material.uniforms) s.material.uniforms.time.value = t; });
+        if (r.nebula?.material?.uniforms) r.nebula.material.uniforms.time.value = t * 0.5;
+        r.camera.position.x = Math.sin(t * 0.1) * 2;
+        r.camera.position.y = 20 + Math.cos(t * 0.15);
+        r.camera.lookAt(0, 10, -600);
+        r.renderer.render(r.scene, r.camera);
+      };
+      animate();
+
+      const onResize = () => {
+        r.camera.aspect = window.innerWidth / window.innerHeight;
+        r.camera.updateProjectionMatrix();
+        r.renderer.setSize(window.innerWidth, window.innerHeight);
+      };
+      window.addEventListener("resize", onResize);
+      r.onResize = onResize;
+    } catch (e) {
+      console.warn("[HorizonHero] WebGL init failed:", e);
+      setWebglFailed(true);
+      return;
+    }
+
+    if (titleRef.current) {
+      const chars = titleRef.current.querySelectorAll(".title-char");
+      gsap.from(chars, { y: 160, opacity: 0, duration: 1.4, stagger: 0.04, ease: "power4.out", delay: 0.2 });
+    }
+    if (subtitleRef.current) {
+      const lines = subtitleRef.current.querySelectorAll(".subtitle-line");
+      gsap.from(lines, { y: 40, opacity: 0, duration: 1, stagger: 0.15, ease: "power3.out", delay: 1.0 });
+    }
+
+    return () => {
+      cancelAnimationFrame(r.raf);
+      if (r.onResize) window.removeEventListener("resize", r.onResize);
+      r.stars?.forEach((s) => { s.geometry.dispose(); s.material.dispose(); });
+      if (r.nebula) { r.nebula.geometry.dispose(); r.nebula.material.dispose(); }
+      r.renderer?.dispose();
+    };
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const heroEl = document.getElementById("horizon");
+      if (!heroEl) return;
+      const total = heroEl.offsetHeight - window.innerHeight;
+      const visible = Math.min(Math.max(-heroEl.getBoundingClientRect().top, 0), total);
+      const p = total > 0 ? visible / total : 0;
+      setProgress(p);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const split = (t) => t.split("").map((c, i) =>
+    html`<span key=${i} class="title-char">${c === " " ? " " : c}</span>`
+  );
+
+  return html`
+    <section id="horizon" class="relative w-full" style=${{ height: "100vh" }}>
+      <div class="sticky top-0 w-full h-screen overflow-hidden">
+        <div class="absolute inset-0 bg-black transition-opacity duration-300" style=${{ opacity: Math.max(0, 1 - progress * 1.4) }}></div>
+        ${!webglFailed && html`<canvas ref=${canvasRef} class="absolute inset-0 w-full h-full transition-opacity duration-300" style=${{ opacity: Math.max(0, 1 - progress * 1.6) }}></canvas>`}
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/80 transition-opacity duration-300" style=${{ opacity: Math.max(0, 1 - progress * 1.2) }}></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6 transition-opacity duration-300" style=${{ opacity: Math.max(0, 1 - progress * 1.5) }}>
+          <p class="text-[10px] md:text-xs tracking-[0.4em] uppercase text-amber-300/80 mb-6">L'art de vêtir un horizon</p>
+          <h1 ref=${titleRef} class="font-display font-bold text-6xl md:text-[9rem] leading-[0.95] tracking-tight text-white">
+            ${split("MARRAKECH")}
+          </h1>
+          <div ref=${subtitleRef} class="mt-10 max-w-2xl text-white/75 text-base md:text-lg font-light">
+            <p class="subtitle-line">Là où la lumière rencontre la pierre,</p>
+            <p class="subtitle-line">là où nous bâtissons votre prochaine adresse.</p>
+          </div>
+          <button onClick=${onScrollToHero} class="mt-12 group inline-flex items-center gap-3 px-6 py-3 rounded-full border border-amber-400/30 bg-amber-400/5 hover:bg-amber-400/10 transition-colors text-xs tracking-[0.25em] uppercase text-amber-100">
+            Découvrir KNA <${ArrowRight} className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+          </button>
+        </div>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 transition-opacity duration-300" style=${{ opacity: Math.max(0, 1 - progress * 1.6) }}>
+          <span class="text-[10px] tracking-[0.4em] uppercase">Scroll</span>
+          <div class="relative w-32 h-px bg-white/10">
+            <div class="absolute inset-y-0 left-0 bg-amber-300/80 transition-[width] duration-100" style=${{ width: (progress * 100).toFixed(0) + "%" }}></div>
+          </div>
+          <span class="text-[10px] tracking-[0.3em] text-white/30 font-mono">${(progress * 100).toFixed(0)}%</span>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function GooeyText({ texts, morphTime = 1, cooldownTime = 0.4, className = "", textClassName = "" }) {
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  useEffect(() => {
+    let idx = texts.length - 1;
+    let t0 = new Date();
+    let morph = 0;
+    let cooldown = cooldownTime;
+    let raf;
+    const setMorph = (f) => {
+      if (!ref1.current || !ref2.current) return;
+      ref2.current.style.filter = "blur(" + Math.min(8 / f - 8, 100) + "px)";
+      ref2.current.style.opacity = (Math.pow(f, 0.4) * 100) + "%";
+      const g = 1 - f;
+      ref1.current.style.filter = "blur(" + Math.min(8 / g - 8, 100) + "px)";
+      ref1.current.style.opacity = (Math.pow(g, 0.4) * 100) + "%";
+    };
+    const doCool = () => {
+      morph = 0;
+      if (!ref1.current || !ref2.current) return;
+      ref2.current.style.filter = "";
+      ref2.current.style.opacity = "100%";
+      ref1.current.style.filter = "";
+      ref1.current.style.opacity = "0%";
+    };
+    const doMorph = () => {
+      morph -= cooldown;
+      cooldown = 0;
+      let f = morph / morphTime;
+      if (f > 1) { cooldown = cooldownTime; f = 1; }
+      setMorph(f);
+    };
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      const t1 = new Date();
+      const shouldInc = cooldown > 0;
+      const dt = (t1.getTime() - t0.getTime()) / 1000;
+      t0 = t1;
+      cooldown -= dt;
+      if (cooldown <= 0) {
+        if (shouldInc) {
+          idx = (idx + 1) % texts.length;
+          if (ref1.current && ref2.current) {
+            ref1.current.textContent = texts[idx % texts.length];
+            ref2.current.textContent = texts[(idx + 1) % texts.length];
+          }
+        }
+        doMorph();
+      } else {
+        doCool();
+      }
+    };
+    tick();
+    return () => cancelAnimationFrame(raf);
+  }, [texts, morphTime, cooldownTime]);
+  return html`
+    <div class=${"relative " + className}>
+      <svg class="absolute h-0 w-0" aria-hidden="true">
+        <defs>
+          <filter id="gooey-threshold">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 255 -140" />
+          </filter>
+        </defs>
+      </svg>
+      <div class="flex items-center justify-center" style=${{ filter: "url(#gooey-threshold)" }}>
+        <span ref=${ref1} class=${"absolute inline-block select-none text-center text-5xl md:text-7xl font-display font-semibold text-amber-200 " + textClassName} />
+        <span ref=${ref2} class=${"absolute inline-block select-none text-center text-5xl md:text-7xl font-display font-semibold text-amber-200 " + textClassName} />
+      </div>
+    </div>`;
+}
+
+function VillaShowcaseCard({ villa, onSelect, index = 0 }) {
+  const cardRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [5, -5]), { stiffness: 220, damping: 22 });
+  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-5, 5]), { stiffness: 220, damping: 22 });
+
+  const onMove = (e) => {
+    if (!cardRef.current) return;
+    const r = cardRef.current.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => { setHovered(false); mx.set(0); my.set(0); };
+
+  return html`
+    <div class="block group cursor-pointer rounded-[28px]" style=${{ perspective: 1100 }} onClick=${() => onSelect(villa)}>
+      <${motion.div}
+        ref=${cardRef}
+        class="villa-card relative w-full bg-black/70 backdrop-blur-sm rounded-[28px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col p-2 gap-3 overflow-hidden border border-amber-400/15"
+        style=${{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        initial=${{ opacity: 0, y: 28 }}
+        whileInView=${{ opacity: 1, y: 0 }}
+        viewport=${{ once: true, margin: "-60px" }}
+        transition=${{ duration: 0.6, ease: "easeOut", delay: (index % 3) * 0.08 }}
+        whileHover=${{ y: -6, scale: 1.02 }}
+        onHoverStart=${() => setHovered(true)}
+        onMouseMove=${onMove}
+        onMouseLeave=${onLeave}
+      >
+        <div class="flex justify-between p-2 items-center">
+          <div class="text-[10px] tracking-[0.3em] uppercase text-amber-200/90 font-medium">${villa.loc}</div>
+          <${motion.div} class="w-9 h-9 bg-amber-400 rounded-full flex items-center justify-center" whileHover=${{ scale: 1.1 }} whileTap=${{ scale: 0.95 }}>
+            <${ArrowUpRight} className="w-5 h-5 text-black" strokeWidth=${2.4} />
+          </${motion.div}>
+        </div>
+        <div class="flex flex-col gap-3 flex-1">
+          <h3 class="font-display text-2xl text-center font-bold leading-tight px-4 gold-gradient-text">${villa.title}</h3>
+          <div class="relative">
+            <div class="relative aspect-[4/3] p-2">
+              <div class="relative w-full h-full overflow-hidden rounded-2xl">
+                <img src=${photoUrl(villa.slug, villa.photos[0])} alt=${villa.title}
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+                  style=${{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
+                  loading=${index < 3 ? "eager" : "lazy"} />
+                <div class="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+                  <span class="text-[10px] tracking-[0.25em] uppercase text-white/80">${prettyTx(villa.tx)} · Réf. ${villa.ref}</span>
+                  <span class="font-display text-xl font-semibold text-amber-200">${formatPrice(villa)}</span>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent pointer-events-none"></div>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 px-3 pt-1 pb-2 text-[11px] text-white/70">
+            <div class="flex items-center justify-center gap-1.5"><${BedDouble} className="w-3.5 h-3.5 text-amber-300" /><span>${villa.ch ?? "—"} ch.</span></div>
+            <div class="flex items-center justify-center gap-1.5"><${Bath} className="w-3.5 h-3.5 text-amber-300" /><span>${villa.sdb ?? "—"} sdb</span></div>
+            <div class="flex items-center justify-center gap-1.5"><${Maximize} className="w-3.5 h-3.5 text-amber-300" /><span>${villa.hab ?? villa.ter ?? "—"} m²</span></div>
+          </div>
+          <div class="px-3 pb-3 mt-auto">
+            <div class="neon-btn relative border border-amber-400/30 text-center rounded-full bg-amber-400/5 transition-colors duration-300 px-5 py-2 text-xs tracking-[0.2em] uppercase text-amber-100">Découvrir</div>
+          </div>
+        </div>
+      </${motion.div}>
+    </div>
+  `;
+}
+
+function FloatingNavbar({ onGoHome, onScrollTo, isDetailPage }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 48);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return html`<>
+    <${motion.header}
+      initial=${{ y: -16, opacity: 0 }} animate=${{ y: 0, opacity: 1 }} transition=${{ duration: 0.6 }}
+      class=${"fixed top-0 inset-x-0 z-50 transition-all duration-500 " + (scrolled ? "px-4 md:px-6 pt-3" : "px-6 md:px-10 pt-5")}>
+      <div class=${"mx-auto flex items-center justify-between gap-4 transition-all duration-500 " + (scrolled ? "max-w-5xl rounded-full border border-amber-400/15 bg-black/55 backdrop-blur-xl px-5 py-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.35)]" : "max-w-7xl bg-transparent px-2 py-3")}>
+        <button onClick=${onGoHome} class="flex items-center gap-2 focus:outline-none">
+          <span class="font-display text-lg md:text-xl font-semibold tracking-[0.2em] text-white">
+            ${KNA.logo.primary}<span class="text-amber-300 mx-1.5">·</span>
+            <span class="text-white/80 font-light tracking-[0.25em] text-sm uppercase">${KNA.logo.suffix}</span>
+          </span>
+        </button>
+        ${isDetailPage
+          ? html`
+            <button onClick=${onGoHome} class="inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase text-white/75 hover:text-amber-300">
+              <${ArrowLeft} className="w-3.5 h-3.5" /> Retour
+            </button>`
+          : html`
+            <nav class="hidden lg:flex items-center gap-7 text-xs tracking-[0.2em] uppercase text-white/75">
+              ${KNA_NAV.map((it) => html`
+                <button key=${it.label} onClick=${() => onScrollTo(it.anchor)} class="relative py-1 hover:text-amber-300 transition-colors">${it.label}</button>`)}
+            </nav>`}
+        <div class="hidden md:block">
+          <${NeonButton} variant="default" size="sm" href=${KNA.whatsappUrl("Bonjour, je souhaite planifier une visite.")} external=${true}>
+            <${MessageCircle} className="w-3.5 h-3.5" />
+            Planifier une visite
+          </${NeonButton}>
+        </div>
+        ${!isDetailPage && html`
+          <button class="lg:hidden p-2 rounded-full text-white/80 hover:text-amber-300" onClick=${() => setOpen(true)} aria-label="Menu">
+            <${Menu} className="w-5 h-5" />
+          </button>`}
+      </div>
+    </${motion.header}>
+
+    ${open && html`
+      <${motion.div} initial=${{ opacity: 0 }} animate=${{ opacity: 1 }} class="fixed inset-0 z-[60] bg-black/85 backdrop-blur-xl lg:hidden">
+        <div class="flex items-center justify-between px-6 pt-6">
+          <span class="font-display text-lg font-semibold tracking-[0.2em] text-white">${KNA.logo.primary}<span class="text-amber-300 mx-1.5">·</span><span class="text-white/80 font-light tracking-[0.25em] text-sm uppercase">${KNA.logo.suffix}</span></span>
+          <button class="p-2 rounded-full text-white/80" onClick=${() => setOpen(false)} aria-label="Fermer"><${X} className="w-5 h-5" /></button>
+        </div>
+        <nav class="px-6 mt-16 space-y-6">
+          ${KNA_NAV.map((it) => html`
+            <button key=${it.label} onClick=${() => { setOpen(false); onScrollTo(it.anchor); }} class="block font-display text-3xl text-white font-light hover:text-amber-300">${it.label}</button>`)}
+          <div class="pt-6">
+            <${NeonButton} variant="solid" size="lg" href=${KNA.whatsappUrl()} external=${true}>
+              <${MessageCircle} className="w-4 h-4" />
+              Planifier une visite
+            </${NeonButton}>
+          </div>
+        </nav>
+      </${motion.div}>
+    `}
+  </>`;
+}
+
+function SideMenu({ sections, currentSection, onSelect }) {
+  return html`
+    <${motion.div}
+      initial=${{ x: 50, opacity: 0 }}
+      animate=${{ x: 0, opacity: 1 }}
+      transition=${{ delay: 1.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      class="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 z-40 flex-col items-end gap-4 pointer-events-none"
+    >
+      <div class="flex flex-col gap-3 items-end pointer-events-auto">
+        ${sections.map((s) => html`
+          <button
+            key=${s.id}
+            onClick=${() => onSelect(s.id)}
+            class="group flex items-center gap-3 focus:outline-none"
+            aria-label=${s.label}
+          >
+            <span class=${"text-[10px] tracking-[0.35em] uppercase font-medium transition-all duration-500 " + (currentSection === s.id ? "text-amber-300 opacity-100 translate-x-0" : "text-white/40 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0")}>
+              ${s.label}
+            </span>
+            <span class=${"block rounded-full transition-all duration-500 " + (currentSection === s.id ? "w-3 h-3 bg-amber-300 shadow-[0_0_12px_rgba(212,165,90,0.7)]" : "w-1.5 h-1.5 bg-white/40 group-hover:bg-amber-300/70 group-hover:scale-150")}></span>
+          </button>
+        `)}
+      </div>
+      <div class="mt-6 flex flex-col items-center gap-3 pointer-events-auto">
+        <span class="text-[9px] tracking-[0.4em] uppercase text-white/30 font-medium" style=${{ writingMode: "vertical-rl" }}>Marrakech · KNA</span>
+        <span class="w-px h-12 bg-gradient-to-b from-amber-300/60 to-transparent"></span>
+      </div>
+    </${motion.div}>`;
+}
+
+function ContainerScroll({ titleComponent, children }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref });
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  const rotate = useTransform(scrollYProgress, [0, 1], [20, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], isMobile ? [0.7, 0.9] : [1.05, 1]);
+  const translate = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  return html`
+    <div ref=${ref} class="h-[60rem] md:h-[80rem] flex items-center justify-center relative p-2 md:p-20">
+      <div class="py-10 md:py-40 w-full relative" style=${{ perspective: "1000px" }}>
+        <${motion.div} style=${{ translateY: translate }} class="max-w-5xl mx-auto text-center">${titleComponent}</${motion.div}>
+        <${motion.div}
+          style=${{ rotateX: rotate, scale, boxShadow: "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042" }}
+          class="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-amber-400/30 p-2 md:p-6 bg-black/60 backdrop-blur-sm rounded-[30px] shadow-2xl">
+          <div class="h-full w-full overflow-hidden rounded-2xl bg-zinc-900 md:p-2">${children}</div>
+        </${motion.div}>
+      </div>
+    </div>`;
+}
+
+function BentoGrid({ onOpen }) {
+  const items = useMemo(() => {
+    const photosFor = (filter, max = 8) => {
+      const matched = BIENS.filter(filter);
+      const photos = [];
+      for (const v of matched) {
+        for (const p of v.photos.slice(0, 2)) photos.push({ src: photoUrl(v.slug, p), villa: v });
+        if (photos.length >= max) break;
+      }
+      return photos.slice(0, max);
+    };
+    return [
+      { key: "pool", title: "Piscine privée", subtitle: "À débordement, sculptée pour l'horizon", icon: html`<${Waves} className="w-6 h-6" />`,
+        body: "Du miroir d'eau intime de la Medina à la piscine olympique des villas de la Palmeraie — l'eau comme architecture.",
+        photos: photosFor((b) => /piscine/i.test(b.desc || "")),
+        colSpan: "md:col-span-2", rowSpan: "md:row-span-2" },
+      { key: "atlas", title: "Vue Atlas", subtitle: "Les sommets en panoramique", icon: html`<${Mountain} className="w-6 h-6" />`,
+        body: "Les contreforts enneigés à l'horizon, depuis Amelkis, l'Ourika ou Tahanaout — un cadre qui change au fil des heures.",
+        photos: photosFor((b) => /atlas|montagne|amelkis|ourika|tahanaout/i.test((b.loc + " " + (b.desc || "")))) },
+      { key: "garden", title: "Jardin paysager", subtitle: "Oliviers centenaires & cyprès", icon: html`<${Trees} className="w-6 h-6" />`,
+        body: "Patios fleuris, palmeraies privées, terrasses végétalisées — chaque propriété cultive son propre microclimat.",
+        photos: photosFor((b) => /jardin|olivier|palmer/i.test(b.desc || "") || /palmeraie/i.test(b.loc)) },
+      { key: "arch", title: "Architecture contemporaine", subtitle: "Lignes pures, matériaux nobles", icon: html`<${Building2} className="w-6 h-6" />`,
+        body: "Tadelakt, zellige, pierre volcanique, bois de cèdre — l'artisanat marocain au service d'une vision résolument moderne.",
+        photos: photosFor((b) => b.type === "riad" || b.type === "villa"),
+        colSpan: "md:col-span-2" },
+      { key: "concierge", title: "Conciergerie privée", subtitle: "24/7, en français, anglais & arabe", icon: html`<${ConciergeBell} className="w-6 h-6" />`,
+        body: "Une équipe dédiée, des relais de confiance dans toute la ville — depuis l'arrivée à l'aéroport jusqu'au chef à domicile.",
+        photos: photosFor((b) => /hivernage|gueliz/i.test(b.loc)) },
+      { key: "invest", title: "Investissement Marrakech", subtitle: "Rendement locatif & valorisation", icon: html`<${TrendingUp} className="w-6 h-6" />`,
+        body: "Yields locatifs nets 5-8% sur le segment riad de la Medina, valorisation patrimoniale forte sur la Palmeraie.",
+        photos: photosFor((b) => b.type === "appartement" || b.type === "riad") },
+    ];
+  }, []);
+
+  return html`
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[16rem] md:auto-rows-[14rem]" style=${{ perspective: 1400 }}>
+      ${items.map((it, i) => html`<${BentoCard} key=${it.key} item=${it} index=${i} onOpen=${onOpen} />`)}
+    </div>`;
+}
+
+function BentoCard({ item, index, onOpen }) {
+  const cardRef = useRef(null);
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), { stiffness: 200, damping: 22 });
+  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-8, 8]), { stiffness: 200, damping: 22 });
+  const z = useSpring(useMotionValue(0), { stiffness: 200, damping: 22 });
+
+  const onMove = (e) => {
+    if (!cardRef.current) return;
+    const r = cardRef.current.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onEnter = () => z.set(40);
+  const onLeave = () => { mx.set(0); my.set(0); z.set(0); };
+
+  return html`
+    <${motion.div}
+      ref=${cardRef}
+      onClick=${() => onOpen(item)}
+      onMouseMove=${onMove}
+      onMouseEnter=${onEnter}
+      onMouseLeave=${onLeave}
+      initial=${{ opacity: 0, y: 32 }}
+      whileInView=${{ opacity: 1, y: 0 }}
+      viewport=${{ once: true, margin: "-60px" }}
+      transition=${{ duration: 0.7, delay: (index % 6) * 0.06 }}
+      whileHover=${{ scale: 1.06 }}
+      style=${{ rotateX, rotateY, translateZ: z, transformStyle: "preserve-3d" }}
+      class=${"relative group cursor-pointer overflow-hidden rounded-3xl border border-amber-400/10 bg-black/50 backdrop-blur-sm transition-shadow duration-500 hover:border-amber-400/40 hover:shadow-[0_50px_90px_-20px_rgba(212,165,90,0.35),0_0_100px_-30px_rgba(212,165,90,0.45)] will-change-transform " + (item.colSpan || "md:col-span-1") + " " + (item.rowSpan || "md:row-span-1")}>
+      ${item.photos[0] && html`<img src=${item.photos[0].src} alt=${item.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-110" loading="lazy" />`}
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+      <!-- Subtle gold rim on hover -->
+      <div class="absolute inset-0 rounded-3xl ring-1 ring-amber-400/0 group-hover:ring-amber-400/40 transition-all duration-500 pointer-events-none"></div>
+      <div class="relative h-full flex flex-col justify-end p-5 md:p-7" style=${{ transform: "translateZ(40px)" }}>
+        <div class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-amber-400/15 backdrop-blur-sm border border-amber-400/30 text-amber-200 mb-4 transition-all duration-500 group-hover:scale-110 group-hover:bg-amber-400/25 group-hover:border-amber-400/60">${item.icon}</div>
+        <h3 class="font-display text-2xl md:text-3xl font-semibold text-white leading-tight">${item.title}</h3>
+        <p class="mt-2 text-sm text-white/70 leading-relaxed max-w-sm">${item.subtitle}</p>
+        <div class="mt-4 inline-flex items-center gap-2 text-[10px] tracking-[0.25em] uppercase text-amber-300/0 group-hover:text-amber-300/90 transition-colors duration-500">
+          <${ArrowUpRight} className="w-3 h-3" /> Explorer
+        </div>
+      </div>
+    </${motion.div}>`;
+}
+
+/* Modal that opens when a Bento card is clicked — carousel of all photos */
+function BentoModal({ item, onClose }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") setIdx((i) => (i + 1) % item.photos.length);
+      if (e.key === "ArrowLeft") setIdx((i) => (i - 1 + item.photos.length) % item.photos.length);
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [item.photos.length, onClose]);
+
+  return html`
+    <${motion.div}
+      initial=${{ opacity: 0 }}
+      animate=${{ opacity: 1 }}
+      exit=${{ opacity: 0 }}
+      transition=${{ duration: 0.3 }}
+      class="fixed inset-0 z-[80] bg-black/85 backdrop-blur-xl flex items-center justify-center p-4 md:p-10"
+      onClick=${onClose}
+    >
+      <${motion.div}
+        onClick=${(e) => e.stopPropagation()}
+        initial=${{ opacity: 0, scale: 0.92, y: 30 }}
+        animate=${{ opacity: 1, scale: 1, y: 0 }}
+        exit=${{ opacity: 0, scale: 0.92, y: 30 }}
+        transition=${{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        class="relative w-full max-w-6xl bg-black/80 border border-amber-400/20 rounded-3xl overflow-hidden shadow-[0_60px_120px_-30px_rgba(212,165,90,0.4)]"
+      >
+        <!-- Close -->
+        <button onClick=${onClose} aria-label="Fermer" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-amber-400/30 border border-white/15 hover:border-amber-300 grid place-items-center text-white transition-all">
+          <${X} className="w-4 h-4" />
+        </button>
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-0">
+          <!-- Photo carousel -->
+          <div class="relative aspect-[16/11] lg:aspect-auto lg:h-[34rem] bg-zinc-900 overflow-hidden">
+            ${item.photos.length > 0 && html`
+              <${motion.img}
+                key=${idx}
+                initial=${{ opacity: 0, scale: 1.03 }}
+                animate=${{ opacity: 1, scale: 1 }}
+                transition=${{ duration: 0.6, ease: "easeOut" }}
+                src=${item.photos[idx].src}
+                alt=${item.title + " — photo " + (idx + 1)}
+                class="absolute inset-0 w-full h-full object-cover"
+              />`}
+            <!-- Gradient overlay -->
+            <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/85 to-transparent"></div>
+            <!-- Controls -->
+            ${item.photos.length > 1 && html`<>
+              <button onClick=${() => setIdx((idx - 1 + item.photos.length) % item.photos.length)} aria-label="Précédent" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-amber-400/40 border border-white/20 grid place-items-center text-white">
+                <${ArrowLeft} className="w-4 h-4" />
+              </button>
+              <button onClick=${() => setIdx((idx + 1) % item.photos.length)} aria-label="Suivant" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-amber-400/40 border border-white/20 grid place-items-center text-white">
+                <${ArrowRight} className="w-4 h-4" />
+              </button>
+              <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
+                <div class="text-[10px] tracking-[0.3em] uppercase text-amber-300">${String(idx + 1).padStart(2, "0")} / ${String(item.photos.length).padStart(2, "0")}</div>
+                <div class="flex gap-1.5">
+                  ${item.photos.map((_, i) => html`<span key=${i} class=${"block w-6 h-px transition-all " + (i === idx ? "bg-amber-300" : "bg-white/25")}></span>`)}
+                </div>
+              </div>
+            </>`}
+          </div>
+
+          <!-- Description side -->
+          <div class="p-6 md:p-10 flex flex-col">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-400/15 border border-amber-400/30 text-amber-200 mb-6 self-start">${item.icon}</div>
+            <p class="text-[10px] tracking-[0.4em] uppercase text-amber-300/80 mb-3">L'expérience KNA</p>
+            <h2 class="font-display text-3xl md:text-4xl font-semibold text-white leading-tight">${item.title}</h2>
+            <p class="mt-3 text-amber-200/80 font-display italic text-lg">${item.subtitle}</p>
+            <p class="mt-6 text-white/75 leading-[1.8] text-sm md:text-base">${item.body}</p>
+
+            <div class="mt-auto pt-8 border-t border-white/10">
+              <p class="text-[10px] tracking-[0.3em] uppercase text-white/50 mb-4">Biens concernés</p>
+              <div class="space-y-2 max-h-32 overflow-y-auto">
+                ${[...new Map(item.photos.map((p) => [p.villa.slug, p.villa])).values()].slice(0, 4).map((v) => html`
+                  <div key=${v.slug} class="flex items-center justify-between gap-3 text-sm text-white/75">
+                    <span class="truncate"><span class="text-amber-300/80">${v.loc}</span> · ${v.title}</span>
+                    <span class="text-amber-200 font-display text-xs shrink-0">${formatPrice(v)}</span>
+                  </div>`)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </${motion.div}>
+    </${motion.div}>`;
+}
+
+function HeroParallax({ products, onSelect }) {
+  const firstRow = products.slice(0, 5);
+  const secondRow = products.slice(5, 10);
+  const thirdRow = products.slice(10, 15);
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const spring = { stiffness: 300, damping: 30, bounce: 100 };
+  const translateX = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1000]), spring);
+  const translateXR = useSpring(useTransform(scrollYProgress, [0, 1], [0, -1000]), spring);
+  const rotateX = useSpring(useTransform(scrollYProgress, [0, 0.2], [15, 0]), spring);
+  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.2], [0.2, 1]), spring);
+  const rotateZ = useSpring(useTransform(scrollYProgress, [0, 0.2], [20, 0]), spring);
+  const translateY = useSpring(useTransform(scrollYProgress, [0, 0.2], [-700, 500]), spring);
+  return html`
+    <div ref=${ref} class="h-[260vh] py-20 overflow-hidden antialiased relative flex flex-col" style=${{ perspective: "1000px", transformStyle: "preserve-3d" }}>
+      <div class="max-w-7xl relative mx-auto py-16 md:py-24 px-6 w-full">
+        <h2 class="font-display text-3xl md:text-6xl font-bold text-white leading-[1.05]">
+          78 propriétés.<br/>
+          <span class="italic font-light gold-gradient-text">L'intégralité du catalogue KNA.</span>
+        </h2>
+        <p class="max-w-2xl text-base md:text-lg text-white/65 mt-6">
+          De la Palmeraie aux contreforts de l'Atlas, en passant par Hivernage et la Medina, parcourez chaque bien d'exception de notre sélection.
+        </p>
+      </div>
+      <${motion.div} style=${{ rotateX, rotateZ, translateY, opacity }}>
+        <${motion.div} class="flex flex-row-reverse space-x-reverse space-x-6 md:space-x-12 mb-10">
+          ${firstRow.map((p) => html`<${ParallaxCard} key=${p.slug} product=${p} translate=${translateX} onSelect=${onSelect} />`)}
+        </${motion.div}>
+        <${motion.div} class="flex flex-row mb-10 space-x-6 md:space-x-12">
+          ${secondRow.map((p) => html`<${ParallaxCard} key=${p.slug} product=${p} translate=${translateXR} onSelect=${onSelect} />`)}
+        </${motion.div}>
+        <${motion.div} class="flex flex-row-reverse space-x-reverse space-x-6 md:space-x-12">
+          ${thirdRow.map((p) => html`<${ParallaxCard} key=${p.slug} product=${p} translate=${translateX} onSelect=${onSelect} />`)}
+        </${motion.div}>
+      </${motion.div}>
+    </div>`;
+}
+function ParallaxCard({ product, translate, onSelect }) {
+  return html`
+    <${motion.div}
+      style=${{ x: translate }}
+      whileHover=${{ y: -20 }}
+      class="group/product h-72 md:h-96 w-[18rem] md:w-[28rem] relative flex-shrink-0"
+    >
+      <button onClick=${() => onSelect(product)} class="block w-full h-full text-left rounded-2xl overflow-hidden">
+        <img src=${photoUrl(product.slug, product.photos[0])} alt=${product.title} class="object-cover object-center absolute h-full w-full inset-0" loading="lazy" />
+      </button>
+      <div class="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none transition-opacity duration-500 rounded-2xl"></div>
+      <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover/product:opacity-100 transition-opacity duration-500 text-white">
+        <p class="text-[10px] tracking-[0.3em] uppercase text-amber-300 mb-1">${product.loc}</p>
+        <h3 class="font-display text-lg md:text-xl font-semibold leading-tight">${product.title}</h3>
+        <p class="text-amber-200 mt-1 font-display text-sm">${formatPrice(product)}</p>
+      </div>
+    </${motion.div}>`;
+}
+
+function ExpandMap({ location, coordinates, className = "" }) {
+  const [expanded, setExpanded] = useState(false);
+  const ref = useRef(null);
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-50, 50], [8, -8]), { stiffness: 300, damping: 30 });
+  const rotateY = useSpring(useTransform(mx, [-50, 50], [-8, 8]), { stiffness: 300, damping: 30 });
+  const onMove = (e) => {
+    if (!ref.current) return;
+    const r = ref.current.getBoundingClientRect();
+    mx.set(e.clientX - (r.left + r.width / 2));
+    my.set(e.clientY - (r.top + r.height / 2));
+  };
+  const onLeave = () => { mx.set(0); my.set(0); };
+  return html`
+    <${motion.div}
+      ref=${ref}
+      class=${"relative cursor-pointer select-none " + className}
+      style=${{ perspective: 1000 }}
+      onMouseMove=${onMove}
+      onMouseLeave=${onLeave}
+      onClick=${() => setExpanded(!expanded)}
+    >
+      <${motion.div}
+        class="relative overflow-hidden rounded-2xl border border-amber-400/20 bg-black/60 backdrop-blur-md"
+        style=${{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        animate=${{ width: expanded ? 360 : 280, height: expanded ? 280 : 140 }}
+        transition=${{ type: "spring", stiffness: 400, damping: 35 }}
+      >
+        <div class="absolute inset-0 bg-gradient-to-br from-amber-400/[0.03] via-transparent to-amber-400/[0.06]"></div>
+        ${expanded && html`
+          <${motion.div}
+            class="absolute inset-0 pointer-events-none"
+            initial=${{ opacity: 0 }}
+            animate=${{ opacity: 1 }}
+            transition=${{ duration: 0.4, delay: 0.1 }}
+          >
+            <div class="absolute inset-0 bg-zinc-900"></div>
+            <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+              <${motion.line} x1="0%" y1="35%" x2="100%" y2="35%" stroke="rgba(212,165,90,0.35)" stroke-width="3" initial=${{ pathLength: 0 }} animate=${{ pathLength: 1 }} transition=${{ duration: 0.8, delay: 0.2 }} />
+              <${motion.line} x1="0%" y1="65%" x2="100%" y2="65%" stroke="rgba(212,165,90,0.35)" stroke-width="3" initial=${{ pathLength: 0 }} animate=${{ pathLength: 1 }} transition=${{ duration: 0.8, delay: 0.3 }} />
+              <${motion.line} x1="30%" y1="0%" x2="30%" y2="100%" stroke="rgba(212,165,90,0.25)" stroke-width="2" initial=${{ pathLength: 0 }} animate=${{ pathLength: 1 }} transition=${{ duration: 0.6, delay: 0.4 }} />
+              <${motion.line} x1="70%" y1="0%" x2="70%" y2="100%" stroke="rgba(212,165,90,0.25)" stroke-width="2" initial=${{ pathLength: 0 }} animate=${{ pathLength: 1 }} transition=${{ duration: 0.6, delay: 0.5 }} />
+              ${[20, 50, 80].map((y, i) => html`<${motion.line} key=${"h"+i} x1="0%" y1=${y + "%"} x2="100%" y2=${y + "%"} stroke="rgba(255,255,255,0.10)" stroke-width="1" initial=${{ pathLength: 0 }} animate=${{ pathLength: 1 }} transition=${{ duration: 0.5, delay: 0.6 + i * 0.1 }} />`)}
+              ${[15, 45, 85].map((x, i) => html`<${motion.line} key=${"v"+i} x1=${x + "%"} y1="0%" x2=${x + "%"} y2="100%" stroke="rgba(255,255,255,0.10)" stroke-width="1" initial=${{ pathLength: 0 }} animate=${{ pathLength: 1 }} transition=${{ duration: 0.5, delay: 0.7 + i * 0.1 }} />`)}
+            </svg>
+            <${motion.div} class="absolute top-[40%] left-[10%] w-[15%] h-[20%] rounded-sm bg-amber-400/15 border border-amber-400/20" initial=${{ opacity: 0, scale: 0.8 }} animate=${{ opacity: 1, scale: 1 }} transition=${{ duration: 0.4, delay: 0.5 }} />
+            <${motion.div} class="absolute top-[15%] left-[35%] w-[12%] h-[15%] rounded-sm bg-amber-400/12 border border-amber-400/18" initial=${{ opacity: 0, scale: 0.8 }} animate=${{ opacity: 1, scale: 1 }} transition=${{ duration: 0.4, delay: 0.6 }} />
+            <${motion.div} class="absolute top-[70%] left-[75%] w-[18%] h-[18%] rounded-sm bg-amber-400/15 border border-amber-400/22" initial=${{ opacity: 0, scale: 0.8 }} animate=${{ opacity: 1, scale: 1 }} transition=${{ duration: 0.4, delay: 0.7 }} />
+            <${motion.div} class="absolute top-[20%] right-[10%] w-[10%] h-[25%] rounded-sm bg-amber-400/12 border border-amber-400/18" initial=${{ opacity: 0, scale: 0.8 }} animate=${{ opacity: 1, scale: 1 }} transition=${{ duration: 0.4, delay: 0.55 }} />
+          </${motion.div}>`}
+        <div class="relative h-full w-full flex flex-col justify-between p-5 z-10">
+          <div class="flex items-center gap-2">
+            <${MapPin} className="w-4 h-4 text-amber-300" />
+            <span class="text-[10px] tracking-[0.3em] uppercase text-amber-300">Localisation</span>
+          </div>
+          ${expanded && html`
+            <${motion.div} initial=${{ opacity: 0, scale: 0 }} animate=${{ opacity: 1, scale: 1 }} transition=${{ delay: 0.3, type: "spring", stiffness: 200 }} class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+              <div class="relative">
+                <div class="absolute -inset-6 rounded-full bg-amber-300/15 animate-ping"></div>
+                <div class="absolute -inset-3 rounded-full bg-amber-300/25"></div>
+                <div class="relative w-5 h-5 rounded-full bg-amber-300 border-2 border-white shadow-[0_0_18px_rgba(212,165,90,0.85)]"></div>
+              </div>
+            </${motion.div}>`}
+          <div>
+            <p class="font-display font-semibold text-white text-lg leading-tight">${location}</p>
+            <p class="text-xs text-white/55 mt-1 font-mono">${coordinates}</p>
+            <div class="mt-3 inline-flex items-center gap-1.5 text-[10px] tracking-[0.25em] uppercase text-amber-200/80">
+              <${Maximize2} className="w-3 h-3" />
+              ${expanded ? "Cliquer pour réduire" : "Cliquer pour agrandir"}
+            </div>
+          </div>
+        </div>
+      </${motion.div}>
+    </${motion.div}>`;
+}
+
+function TestimonialsMarquee() {
+  // Vrais avis Google clients d'Agence KNA
+  const items = [
+    { who: "Khawla Dib", year: "2024", source: "Google", rating: 5, text: "Excellente expérience avec KNA ! L'équipe est incroyablement professionnelle et à l'écoute. Le processus de location a été facile et rapide grâce à leur accompagnement. Je recommande vivement cette agence pour son sérieux et son efficacité !" },
+    { who: "Samuel Krief", year: "2024", source: "Google", rating: 5, text: "Karim et son équipe sont d'un grand professionnalisme avec toutes les bonnes connexions pour avancer sur un achat immobilier à Marrakech, je recommande à 100%." },
+    { who: "Achraf Bouqdib", year: "2024", source: "Google", rating: 5, text: "Karim est un entrepreneur passionné, à l'écoute de ses clients, ce qui rend l'expérience avec KNA exceptionnelle. Je recommande vivement." },
+    { who: "Abdelfattah Romani", year: "2017", source: "Google", rating: 5, text: "KNA, l'immobilier sur Marrakech, donne les meilleurs conseils pour un vrai investissement." },
+    { who: "Faïçal El Amrani", year: "2017", source: "Google", rating: 5, text: "Je recommande cette adresse pour les biens immobiliers de luxe à Marrakech au Maroc." },
+  ];
+  const doubled = [...items, ...items];
+  return html`
+    <div class="marquee-mask overflow-hidden">
+      <div class="marquee-track flex gap-6 py-2" style=${{ width: "max-content" }}>
+        ${doubled.map((t, i) => html`
+          <div key=${i} class="w-[380px] md:w-[460px] flex-shrink-0 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-7 flex flex-col">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex gap-0.5 text-amber-300 text-sm">★★★★★</div>
+              <div class="text-[9px] tracking-[0.3em] uppercase text-white/40">Avis Google</div>
+            </div>
+            <p class="text-amber-200 text-2xl leading-none mb-2 font-display">"</p>
+            <p class="text-white/80 leading-relaxed text-sm md:text-base flex-1">${t.text}</p>
+            <div class="mt-5 pt-5 border-t border-white/10 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-amber-400/15 border border-amber-400/30 grid place-items-center text-amber-200 text-xs font-semibold">${t.who.split(" ").map((s) => s[0]).join("").slice(0, 2)}</div>
+              <div>
+                <p class="font-medium text-white text-sm">${t.who}</p>
+                <p class="text-[10px] tracking-[0.25em] uppercase text-white/50 mt-0.5">${t.source} · il y a ${t.year === "2017" ? "8 ans" : "1 an"}</p>
+              </div>
+            </div>
+          </div>
+        `)}
+      </div>
+    </div>`;
+}
+
+function AnimatedFooterBlock({ delay = 0.1, className = "", children }) {
+  return html`
+    <${motion.div}
+      initial=${{ filter: "blur(4px)", translateY: -8, opacity: 0 }}
+      whileInView=${{ filter: "blur(0px)", translateY: 0, opacity: 1 }}
+      viewport=${{ once: true }}
+      transition=${{ delay, duration: 0.8 }}
+      class=${className}
+    >${children}</${motion.div}>`;
+}
+function FooterAsme() {
+  const sections = [
+    { label: "L'agence", links: [
+      { title: "Notre métier", href: "#features" },
+      { title: "Karim Naciri", href: "#contact" },
+      { title: "Témoignages", href: "#testimonials" },
+      { title: "Contact", href: "#contact" },
+    ]},
+    { label: "Catalogue", links: [
+      { title: "Villas", href: "#villas" },
+      { title: "Riads", href: "#villas" },
+      { title: "Appartements", href: "#villas" },
+      { title: "Catalogue complet", href: "#parallax" },
+    ]},
+    { label: "Services", links: [
+      { title: "Estimation gratuite", href: "#contact" },
+      { title: "Conciergerie", href: "#contact" },
+      { title: "Gestion locative", href: "#contact" },
+      { title: "Investissement", href: "#contact" },
+    ]},
+    { label: "Suivez-nous", links: [
+      { title: "Instagram", href: "#", Icon: Instagram },
+      { title: "Facebook", href: "#", Icon: Facebook },
+      { title: "YouTube", href: "#", Icon: Youtube },
+      { title: "LinkedIn", href: "#", Icon: Linkedin },
+    ]},
+  ];
+  return html`
+    <footer class="relative w-full max-w-6xl mx-auto flex flex-col items-center justify-center rounded-t-[3rem] md:rounded-t-[4rem] border-t border-white/10 bg-[radial-gradient(35%_128px_at_50%_0%,rgba(212,165,90,0.18),transparent)] px-6 py-14 lg:py-20 z-10">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 h-px w-1/3 rounded-full bg-gradient-to-r from-transparent via-amber-300/70 to-transparent blur"></div>
+      <div class="grid w-full gap-8 xl:grid-cols-3 xl:gap-8">
+        <${AnimatedFooterBlock} className="space-y-4">
+          <div class="font-display text-2xl tracking-[0.2em] font-semibold text-white">
+            ${KNA.logo.primary}<span class="text-amber-300 mx-1.5">·</span><span class="text-white/80 font-light text-base uppercase tracking-[0.25em]">${KNA.logo.suffix}</span>
+          </div>
+          <p class="text-white/60 mt-6 text-sm leading-relaxed max-w-xs">${KNA.baseline} Depuis ${KNA.founded}.</p>
+          <div class="pt-6 space-y-2 text-sm">
+            <a href=${KNA.whatsappUrl()} target="_blank" rel="noopener" class="flex items-center gap-2 text-white/70 hover:text-amber-300 transition-colors"><${MessageCircle} className="w-3.5 h-3.5 text-amber-300" /> ${KNA.whatsapp}</a>
+            <a href=${"tel:" + KNA.phoneRaw} class="flex items-center gap-2 text-white/70 hover:text-amber-300 transition-colors"><${Phone} className="w-3.5 h-3.5 text-amber-300" /> ${KNA.phone}</a>
+            <a href=${"mailto:" + KNA.email} class="flex items-center gap-2 text-white/70 hover:text-amber-300 transition-colors"><${Mail} className="w-3.5 h-3.5 text-amber-300" /> ${KNA.email}</a>
+          </div>
+          <p class="text-white/40 mt-8 text-xs">© ${new Date().getFullYear()} ${KNA.name}. Tous droits réservés.</p>
+        </${AnimatedFooterBlock}>
+        <div class="mt-8 grid grid-cols-2 gap-8 md:grid-cols-4 xl:col-span-2 xl:mt-0">
+          ${sections.map((s, i) => html`
+            <${AnimatedFooterBlock} key=${s.label} delay=${0.1 + i * 0.1}>
+              <div>
+                <h3 class="text-[10px] tracking-[0.3em] uppercase text-amber-300/80">${s.label}</h3>
+                <ul class="text-white/60 mt-5 space-y-2.5 text-sm">
+                  ${s.links.map((l) => html`
+                    <li key=${l.title}>
+                      <a href=${l.href} class="hover:text-white inline-flex items-center transition-all duration-300">
+                        ${l.Icon ? html`<${l.Icon} className="me-2 w-3.5 h-3.5" />` : ""}
+                        ${l.title}
+                      </a>
+                    </li>`)}
+                </ul>
+              </div>
+            </${AnimatedFooterBlock}>`)}
+        </div>
+      </div>
+    </footer>`;
+}
+
+function Stat({ value, label }) {
+  return html`
+    <div class="bg-black/60 backdrop-blur-md py-6 px-4 flex flex-col items-center gap-2">
+      <span class="font-display text-3xl md:text-4xl font-semibold text-amber-200">${value}</span>
+      <span class="text-[10px] tracking-[0.3em] uppercase text-white/55 text-center">${label}</span>
+    </div>`;
+}
+
+function ContactRow({ icon, label, value, href, colorClass = "amber" }) {
+  const palette = {
+    emerald: "border-emerald-400/20 bg-emerald-500/5 hover:bg-emerald-500/10 hover:border-emerald-400/50",
+    amber: "border-amber-400/20 bg-amber-400/5 hover:bg-amber-400/10 hover:border-amber-400/50",
+    white: "border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30",
+  };
+  return html`
+    <a href=${href} target="_blank" rel="noopener noreferrer" class=${"flex flex-col items-center gap-3 p-6 rounded-2xl border transition-all " + palette[colorClass]}>
+      ${icon}
+      <span class="text-[10px] tracking-[0.3em] uppercase text-white/60">${label}</span>
+      <span class="text-sm">${value}</span>
+    </a>`;
+}
+
+function HomePage({ onSelectVilla, onScrollTo }) {
+  const featured = BIENS.filter((b) => b.type === "villa" && b.tx === "achat").sort((a, b) => (b.price || 0) - (a.price || 0))[0] || BIENS[0];
+  const [typeFilter, setTypeFilter] = useState("all"); // all | villa | riad | appartement
+  const [txFilter, setTxFilter] = useState("all"); // all | achat | location
+  const [bentoOpen, setBentoOpen] = useState(null);
+  const catalog = useMemo(() => {
+    return BIENS.filter((b) => {
+      if (typeFilter !== "all" && b.type !== typeFilter) return false;
+      if (txFilter !== "all" && b.tx !== txFilter) return false;
+      return true;
+    });
+  }, [typeFilter, txFilter]);
+  const totalBiens = BIENS.length;
+  const totalVillas = BIENS.filter((b) => b.type === "villa").length;
+  const totalRiads = BIENS.filter((b) => b.type === "riad").length;
+  const yearsExperience = new Date().getFullYear() - KNA.founded;
+
+  return html`
+    <main class="relative z-10">
+
+      <${HorizonHero} onScrollToHero=${() => onScrollTo("hero")} />
+
+      <section id="hero" class="min-h-screen flex flex-col items-center justify-center px-6 md:px-10 pt-32 pb-16 text-center relative">
+        <${motion.div} initial=${{ opacity: 0, y: 20 }} animate=${{ opacity: 1, y: 0 }} transition=${{ duration: 0.8 }} class="mb-6">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-400/30 bg-amber-400/5 backdrop-blur-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-300 pulse-soft"></span>
+            <${AnimatedText} text="Luxury Real Estate Marrakech" textClassName="text-[10px] md:text-xs" />
+          </div>
+        </${motion.div}>
+        <${motion.h1}
+          initial=${{ opacity: 0, y: 40 }} animate=${{ opacity: 1, y: 0 }} transition=${{ duration: 1, delay: 0.1 }}
+          class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-5xl leading-[1.05]">
+          Trouvez votre villa<br/>
+          <span class="gold-gradient-text italic font-light">d'exception</span> à Marrakech
+        </${motion.h1}>
+        <${motion.p} initial=${{ opacity: 0, y: 20 }} animate=${{ opacity: 1, y: 0 }} transition=${{ duration: 0.8, delay: 0.3 }} class="mt-8 text-base md:text-lg text-white/70 max-w-2xl leading-relaxed font-light">
+          ${KNA.name} — ${KNA.tagline}. Une sélection éditoriale stricte de propriétés à acquérir ou à louer dans les quartiers les plus recherchés de la ville ocre.
+        </${motion.p}>
+        <${motion.div} initial=${{ opacity: 0, y: 20 }} animate=${{ opacity: 1, y: 0 }} transition=${{ duration: 0.8, delay: 0.45 }} class="mt-12 flex flex-wrap items-center justify-center gap-4">
+          <${NeonButton} variant="solid" size="lg" onClick=${() => onScrollTo("villas")}>
+            Voir le catalogue <${ArrowRight} className="w-4 h-4" />
+          </${NeonButton}>
+          <${NeonButton} variant="default" size="lg" href=${KNA.whatsappUrl("Bonjour, je souhaite planifier une visite.")} external=${true}>
+            <${MessageCircle} className="w-4 h-4" /> Planifier une visite
+          </${NeonButton}>
+        </${motion.div}>
+
+        <${motion.div} initial=${{ opacity: 0 }} animate=${{ opacity: 1 }} transition=${{ duration: 1, delay: 0.9 }} class="mt-16 h-24 md:h-32 w-full flex items-center justify-center">
+          <${GooeyText} texts=${['Villas','Riads','Appartements','Palmeraie','Hivernage','Marrakech']} morphTime=${1} cooldownTime=${0.6} />
+        </${motion.div}>
+
+        <${motion.div} initial=${{ opacity: 0, y: 30 }} animate=${{ opacity: 1, y: 0 }} transition=${{ duration: 0.8, delay: 1.1 }} class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px max-w-4xl w-full bg-white/5 rounded-3xl overflow-hidden border border-white/10">
+          <${Stat} value=${String(totalBiens)} label="Biens d'exception" />
+          <${Stat} value=${yearsExperience + "+"} label="Années d'expérience" />
+          <${Stat} value="3" label="Langues parlées" />
+          <${Stat} value="2h" label="Réponse garantie" />
+        </${motion.div}>
+      </section>
+
+      <section id="experience" class="relative z-10">
+        <${ContainerScroll} titleComponent=${html`
+          <div class="text-center mb-4">
+            <p class="text-[11px] tracking-[0.4em] uppercase text-amber-300/80 mb-4">En vedette ce mois-ci</p>
+            <h2 class="font-display text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">L'art de vivre,<span class="block mt-2 gold-gradient-text italic">selon Marrakech.</span></h2>
+          </div>`}>
+          <div class="relative w-full h-full">
+            <img src=${photoUrl(featured.slug, featured.photos[0])} alt=${featured.title} class="absolute inset-0 w-full h-full object-cover rounded-2xl" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent rounded-2xl"></div>
+            <div class="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white">
+              <div>
+                <p class="text-[10px] tracking-[0.4em] uppercase text-amber-300/90 mb-2">${featured.loc} · Marrakech</p>
+                <h3 class="font-display text-2xl md:text-4xl font-semibold">${featured.title}</h3>
+              </div>
+              <${NeonButton} variant="default" size="sm" onClick=${() => onSelectVilla(featured)}>
+                Découvrir <${ArrowRight} className="w-3.5 h-3.5" />
+              </${NeonButton}>
+            </div>
+          </div>
+        </${ContainerScroll}>
+      </section>
+
+      <section id="features" class="px-6 md:px-10 py-24 md:py-32">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-16">
+            <${AnimatedText} text="L'expérience KNA" textClassName="text-[10px] md:text-xs" className="mb-6" />
+            <h2 class="font-display text-4xl md:text-6xl font-bold leading-tight max-w-4xl mx-auto">Six promesses. <span class="italic font-light gold-gradient-text">Aucun compromis.</span></h2>
+            <p class="mt-6 text-white/60 max-w-2xl mx-auto">Une exigence partagée : transformer chaque acquisition à Marrakech en parenthèse durable.</p>
+          </div>
+          <${BentoGrid} onOpen=${setBentoOpen} />
+        </div>
+      </section>
+
+      <section id="villas" class="px-6 md:px-10 py-24 md:py-32">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-12">
+            <${AnimatedText} text="Exclusive Collection" textClassName="text-[10px] md:text-xs" className="mb-6" />
+            <h2 class="font-display text-4xl md:text-6xl font-bold leading-tight max-w-4xl mx-auto">${totalBiens} biens, <span class="italic font-light gold-gradient-text">${totalVillas} villas · ${totalRiads} riads.</span></h2>
+            <p class="mt-6 text-white/60 max-w-2xl mx-auto">De la Palmeraie au cœur de la Medina, l'intégralité de notre catalogue confidentiel — sélectionné un bien à la fois.</p>
+          </div>
+
+          <!-- Filters -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+            <div class="inline-flex items-center gap-1 p-1 rounded-full border border-white/10 bg-black/40 backdrop-blur-sm">
+              ${[{ k: "all", l: "Tout" }, { k: "villa", l: "Villas" }, { k: "riad", l: "Riads" }, { k: "appartement", l: "Apparts" }].map((opt) => html`
+                <button key=${opt.k} onClick=${() => setTypeFilter(opt.k)}
+                  class=${"px-4 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase transition-all duration-300 " + (typeFilter === opt.k ? "bg-amber-400 text-black font-medium" : "text-white/70 hover:text-white")}>
+                  ${opt.l}
+                </button>`)}
+            </div>
+            <div class="inline-flex items-center gap-1 p-1 rounded-full border border-white/10 bg-black/40 backdrop-blur-sm">
+              ${[{ k: "all", l: "Tout" }, { k: "achat", l: "Vente" }, { k: "location", l: "Location" }].map((opt) => html`
+                <button key=${opt.k} onClick=${() => setTxFilter(opt.k)}
+                  class=${"px-4 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase transition-all duration-300 " + (txFilter === opt.k ? "bg-amber-400 text-black font-medium" : "text-white/70 hover:text-white")}>
+                  ${opt.l}
+                </button>`)}
+            </div>
+            <div class="text-[10px] tracking-[0.25em] uppercase text-white/45">
+              ${catalog.length} / ${totalBiens} biens
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            ${catalog.map((v, i) => html`<${VillaShowcaseCard} key=${v.slug} villa=${v} onSelect=${onSelectVilla} index=${i} />`)}
+          </div>
+
+          ${catalog.length === 0 && html`
+            <div class="text-center py-20 text-white/50 text-sm">Aucun bien ne correspond à ces filtres.</div>`}
+
+          <div class="mt-16 flex justify-center">
+            <${NeonButton} variant="default" size="lg" href=${KNA.whatsappUrl("Bonjour, je souhaite plus de détails sur le catalogue.")} external=${true}>
+              <${Sparkles} className="w-4 h-4" /> Discuter avec un conseiller
+            </${NeonButton}>
+          </div>
+        </div>
+      </section>
+
+      <section id="parallax" class="relative">
+        <${HeroParallax} products=${BIENS.slice(0, 15)} onSelect=${onSelectVilla} />
+      </section>
+
+      <section id="testimonials" class="py-24 md:py-32">
+        <div class="text-center mb-14 px-6 md:px-10">
+          <${AnimatedText} text="Témoignages" textClassName="text-[10px] md:text-xs" className="mb-6" />
+          <h2 class="font-display text-4xl md:text-6xl font-bold leading-tight max-w-4xl mx-auto">La confiance, <span class="italic font-light gold-gradient-text">avant tout.</span></h2>
+        </div>
+        <${TestimonialsMarquee} />
+      </section>
+
+      <section id="contact" class="px-6 md:px-10 py-24 md:py-32">
+        <div class="max-w-5xl mx-auto text-center">
+          <${AnimatedText} text="Contact" textClassName="text-[10px] md:text-xs" className="mb-6" />
+          <h2 class="font-display text-4xl md:text-6xl font-bold leading-tight">Votre projet. <span class="italic font-light gold-gradient-text">Notre métier.</span></h2>
+          <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <${ContactRow} icon=${html`<${MessageCircle} className="w-6 h-6 text-emerald-300" />`} label="WhatsApp" value=${KNA.whatsapp} href=${KNA.whatsappUrl()} colorClass="emerald" />
+            <${ContactRow} icon=${html`<${Phone} className="w-6 h-6 text-amber-300" />`} label="Téléphone" value=${KNA.phone} href=${"tel:" + KNA.phoneRaw} colorClass="amber" />
+            <${ContactRow} icon=${html`<${Mail} className="w-6 h-6 text-white" />`} label="Email" value=${KNA.email} href=${"mailto:" + KNA.email} colorClass="white" />
+          </div>
+          <div class="mt-10 inline-flex items-center gap-2 text-sm text-white/55">
+            <${MapPin} className="w-4 h-4 text-amber-300" />
+            <span>${KNA.address}</span>
+          </div>
+        </div>
+      </section>
+
+      <${FooterAsme} />
+
+      ${bentoOpen && html`<${BentoModal} item=${bentoOpen} onClose=${() => setBentoOpen(null)} />`}
+    </main>`;
+}
+
+function VillaDetailPage({ villa, onBack, onSelectVilla }) {
+  const similar = BIENS.filter((b) => b.slug !== villa.slug && b.type === villa.type).slice(0, 3);
+  const formattedPrice = formatPrice(villa);
+  return html`
+    <main class="relative z-10 pt-28 pb-24">
+      <section class="px-6 md:px-10">
+        <div class="max-w-7xl mx-auto">
+          <div class="flex items-center gap-3 text-[10px] tracking-[0.3em] uppercase text-white/50 mb-6">
+            <button onClick=${onBack} class="hover:text-amber-300">Collection</button>
+            <span>/</span>
+            <span class="text-amber-300">${villa.loc}</span>
+            <span>/</span>
+            <span class="text-white">${villa.title}</span>
+          </div>
+          <${motion.div} initial=${{ opacity: 0, scale: 0.98 }} animate=${{ opacity: 1, scale: 1 }} transition=${{ duration: 0.9 }} class="relative w-full aspect-[16/9] rounded-3xl overflow-hidden border border-amber-400/15">
+            <img src=${photoUrl(villa.slug, villa.photos[0])} alt=${villa.title} class="absolute inset-0 w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+              <div>
+                <p class="text-[10px] tracking-[0.4em] uppercase text-amber-300/90 mb-2 flex items-center gap-2"><${MapPin} className="w-3 h-3" />${villa.loc} · Marrakech</p>
+                <h1 class="font-display text-3xl md:text-5xl lg:text-6xl font-semibold text-white max-w-3xl">${villa.title}</h1>
+              </div>
+              <div class="hidden md:flex flex-col items-end shrink-0">
+                <span class="text-[10px] tracking-[0.3em] uppercase text-white/60">${prettyTx(villa.tx) || "Prix"}</span>
+                <span class="font-display text-3xl font-semibold text-amber-200">${formattedPrice}</span>
+              </div>
+            </div>
+          </${motion.div}>
+        </div>
+      </section>
+
+      <section class="px-6 md:px-10 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col items-start gap-4">
+          <div class="flex items-center gap-3 text-[10px] tracking-[0.3em] uppercase text-amber-300/80">
+            <${Compass} className="w-3.5 h-3.5" /> Sur la carte
+          </div>
+          <${ExpandMap}
+            location=${villa.loc + ", Marrakech"}
+            coordinates=${formatCoords(getCoords(villa.loc))}
+          />
+          <p class="text-xs text-white/45 max-w-md mt-1">Coordonnées indicatives du quartier. Adresse exacte communiquée après prise de contact.</p>
+        </div>
+      </section>
+
+      <section class="px-6 md:px-10 mt-14">
+        <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+          ${[
+            { icon: html`<${BedDouble} className="w-5 h-5" />`, label: "Chambres", value: villa.ch ?? "—" },
+            { icon: html`<${Bath} className="w-5 h-5" />`, label: "Salles de bain", value: villa.sdb ?? "—" },
+            { icon: html`<${Maximize} className="w-5 h-5" />`, label: "Surface", value: (villa.hab ?? villa.ter) ? (villa.hab ?? villa.ter) + " m²" : "—" },
+            { icon: null, label: prettyTx(villa.tx) || "Prix", value: formattedPrice, accent: true },
+          ].map((s, i) => html`
+            <div key=${i} class=${"rounded-2xl border p-5 flex flex-col gap-2 " + (s.accent ? "border-amber-400/40 bg-amber-400/5" : "border-white/10 bg-white/[0.02]")}>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] tracking-[0.3em] uppercase text-white/50">${s.label}</span>
+                ${s.icon && html`<span class="text-amber-300">${s.icon}</span>`}
+              </div>
+              <span class=${"font-display text-2xl md:text-3xl font-semibold " + (s.accent ? "text-amber-200" : "text-white")}>${s.value}</span>
+            </div>`)}
+        </div>
+      </section>
+
+      <section class="px-6 md:px-10 mt-20 md:mt-28">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-20">
+          <div>
+            <${AnimatedText} text="Description" textClassName="text-[10px] md:text-xs" className="justify-start mb-6" />
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight mb-6">L'esprit du <span class="italic font-light gold-gradient-text">lieu.</span></h2>
+            <p class="article-firstletter text-white/75 text-base md:text-lg leading-[1.8] max-w-2xl">${villa.desc || "Description détaillée disponible sur demande."}</p>
+            ${villa.feat && villa.feat.length > 0 && html`
+              <div class="mt-12">
+                <h3 class="text-[10px] tracking-[0.3em] uppercase text-amber-300/80 mb-6">Prestations</h3>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  ${villa.feat.map((f) => html`
+                    <li key=${f} class="flex items-center gap-3 text-white/80">
+                      <${Check} className="w-4 h-4 text-amber-300 flex-shrink-0" />
+                      <span class="text-sm">${f}</span>
+                    </li>`)}
+                </ul>
+              </div>`}
+          </div>
+          <aside class="lg:sticky lg:top-28 self-start">
+            <div class="rounded-3xl border border-amber-400/15 bg-black/60 backdrop-blur-md p-6 md:p-8">
+              <div class="flex items-center gap-4 pb-6 border-b border-white/10">
+                <div class="w-12 h-12 rounded-full bg-amber-400 grid place-items-center text-black font-semibold">KN</div>
+                <div>
+                  <p class="font-display text-lg font-semibold">Karim Naciri</p>
+                  <p class="text-[10px] tracking-[0.25em] uppercase text-white/50 mt-0.5">Conseiller référent</p>
+                </div>
+              </div>
+              <div class="mt-6 space-y-3">
+                <${NeonButton} variant="emerald" size="lg" href=${KNA.whatsappUrl("Bonjour, je m'intéresse à " + villa.title + " (" + villa.loc + ").")} external=${true} className="w-full">
+                  <${MessageCircle} className="w-4 h-4" /> Contact WhatsApp
+                </${NeonButton}>
+                <${NeonButton} variant="solid" size="lg" href=${"tel:" + KNA.phoneRaw} className="w-full">
+                  <${Phone} className="w-4 h-4" /> Appeler
+                </${NeonButton}>
+                <${NeonButton} variant="default" size="lg" href=${"mailto:" + KNA.email + "?subject=" + encodeURIComponent("Demande - " + villa.title)} className="w-full">
+                  <${Mail} className="w-4 h-4" /> Demander des infos
+                </${NeonButton}>
+              </div>
+              <div class="mt-6 pt-6 border-t border-white/10 text-center text-[10px] tracking-[0.25em] uppercase text-white/50">Réponse sous 2 heures</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      ${villa.photos.length > 1 && html`
+        <section class="px-6 md:px-10 mt-24 md:mt-32">
+          <div class="max-w-7xl mx-auto">
+            <${AnimatedText} text="Galerie" textClassName="text-[10px] md:text-xs" className="justify-start mb-6" />
+            <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight mb-12">Une lecture <span class="italic font-light gold-gradient-text">en images.</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+              ${villa.photos.map((p, i) => html`
+                <${motion.div}
+                  key=${p}
+                  initial=${{ opacity: 0, y: 20 }}
+                  whileInView=${{ opacity: 1, y: 0 }}
+                  viewport=${{ once: true, margin: "-50px" }}
+                  transition=${{ duration: 0.6, delay: (i % 3) * 0.08 }}
+                  class=${"relative rounded-2xl overflow-hidden border border-white/5 " + (i === 0 ? "md:col-span-2 md:row-span-2 aspect-[4/3] md:aspect-[5/4]" : "aspect-[4/3]")}>
+                  <img src=${photoUrl(villa.slug, p)} alt=${villa.title + " — photo " + (i+1)} class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 hover:scale-105" loading=${i < 2 ? "eager" : "lazy"} />
+                </${motion.div}>`)}
+            </div>
+          </div>
+        </section>`}
+
+      ${similar.length > 0 && html`
+        <section class="px-6 md:px-10 mt-24 md:mt-32">
+          <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+              <${AnimatedText} text="Dans le même esprit" textClassName="text-[10px] md:text-xs" className="mb-6" />
+              <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight">D'autres <span class="italic font-light gold-gradient-text">propositions.</span></h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              ${similar.map((v, i) => html`<${VillaShowcaseCard} key=${v.slug} villa=${v} onSelect=${onSelectVilla} index=${i} />`)}
+            </div>
+          </div>
+        </section>`}
+
+      <section class="px-6 md:px-10 mt-24 md:mt-32 text-center">
+        <${NeonButton} variant="default" size="lg" onClick=${onBack}>
+          <${ArrowLeft} className="w-4 h-4" /> Voir toute la collection <${ArrowRight} className="w-4 h-4" />
+        </${NeonButton}>
+      </section>
+
+      <${FooterAsme} />
+    </main>`;
+}
+
+function App() {
+  const [currentVilla, setCurrentVilla] = useState(null);
+  const [currentSection, setCurrentSection] = useState("horizon");
+
+  useEffect(() => {
+    const loader = document.getElementById("initial-loader");
+    if (loader) setTimeout(() => loader.classList.add("gone"), 400);
+  }, []);
+
+  // Lenis smooth scroll — butter-smooth 60+ FPS scrolling
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.4,
+    });
+    let raf;
+    const tick = (t) => { lenis.raf(t); raf = requestAnimationFrame(tick); };
+    raf = requestAnimationFrame(tick);
+    return () => { cancelAnimationFrame(raf); lenis.destroy(); };
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [currentVilla?.slug]);
+
+  useEffect(() => {
+    if (currentVilla) return;
+    const ids = ["horizon", "hero", "experience", "features", "villas", "parallax", "testimonials", "contact"];
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setCurrentSection(e.target.id); });
+    }, { rootMargin: "-40% 0px -50% 0px" });
+    ids.forEach((id) => { const el = document.getElementById(id); if (el) obs.observe(el); });
+    return () => obs.disconnect();
+  }, [currentVilla]);
+
+  const SECTIONS = [
+    { id: "horizon",      label: "Horizon" },
+    { id: "hero",         label: "Accueil" },
+    { id: "experience",   label: "En vedette" },
+    { id: "features",     label: "Expérience" },
+    { id: "villas",       label: "Collection" },
+    { id: "parallax",     label: "Catalogue" },
+    { id: "testimonials", label: "Témoignages" },
+    { id: "contact",      label: "Contact" },
+  ];
+
+  const goHome = () => setCurrentVilla(null);
+  const scrollToSection = (id) => {
+    const go = () => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    if (currentVilla) { setCurrentVilla(null); setTimeout(go, 50); } else { go(); }
+  };
+
+  return html`<>
+    <${PaperBackground} speed=${0.5} />
+    <${FloatingNavbar} onGoHome=${goHome} onScrollTo=${scrollToSection} isDetailPage=${!!currentVilla} />
+    ${!currentVilla && html`<${SideMenu} sections=${SECTIONS} currentSection=${currentSection} onSelect=${scrollToSection} />`}
+    ${currentVilla
+      ? html`<${VillaDetailPage} villa=${currentVilla} onBack=${goHome} onSelectVilla=${setCurrentVilla} />`
+      : html`<${HomePage} onSelectVilla=${setCurrentVilla} onScrollTo=${scrollToSection} />`}
+  </>`;
+}
+
+createRoot(document.getElementById("root")).render(html`<${App} />`);
+</script>
+
+</body>
+</html>
